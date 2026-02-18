@@ -13,7 +13,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
 
-
 const AuthForm = ({ type }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -107,6 +106,11 @@ const AuthForm = ({ type }) => {
             <Button disabled={isDisabled} onClick={handleAuth} fullWidth>
               {type === "login" ? "Login" : "Register"}
             </Button>
+            {type === "login" && (
+              <Button component={Link} to="/" variant="filled">
+                Try the game out!
+              </Button>
+            )}
           </Stack>
         </Stack>
       </Paper>

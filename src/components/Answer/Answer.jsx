@@ -1,7 +1,7 @@
 import style from "./Answer.module.css";
 import { Button } from '@mantine/core';
 
-const =[selected, setSelected] = useState[0]
+const [selected, setSelected] = useState(0);
 
 function handleClick() {
   setSelected(true);

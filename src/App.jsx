@@ -4,6 +4,7 @@ import Register from "./pages/Register/Register";
 import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { AuthProvider } from "./auth/AuthProvider";
+import { Navbar } from "./components/Navbar/Navbar";
 
 function App() {
   const [authReady, setAuthReady] = useState(null);
@@ -15,6 +16,7 @@ function App() {
           setAuthReady(true);
         }}
       >
+        <Navbar />
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />

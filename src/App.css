@@ -1,0 +1,9 @@
+:root {
+  font-family: Greycliff CF, var(--mantine-font-family) !important;
+}
+
+body {
+  font-family: Greycliff CF, var(--mantine-font-family);
+  margin: 0;
+}
+

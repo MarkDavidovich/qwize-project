@@ -26,7 +26,7 @@ export function AuthProvider({ onAuthReady, children }) {
 
   const handleLogin = async (email, password) => {
     try {
-      const { data, error } = await supabase.auth.signWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });

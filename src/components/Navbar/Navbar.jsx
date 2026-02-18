@@ -1,6 +1,33 @@
-import style from "./Navbar.module.css";
+import { useState } from "react";
+import { Box, Burger, Button, Container, Group } from "@mantine/core";
+import classes from "./Navbar.module.css";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../../auth/AuthProvider";
 
-const Navbar = () => {
-  return <div>Navbar</div>;
-};
-export default Navbar;
+export function Navbar() {
+  const { loggedOnUser, handleLogout } = useAuth();
+
+  return (
+    <header className={classes.header}>
+      <Container size="md" className={classes.inner}>
+        <Group gap={5}>
+          <NavLink to="/" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
+            Home
+          </NavLink>
+          <NavLink to="/login" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
+            Login
+          </NavLink>
+          <NavLink to="/register" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
+            Register
+          </NavLink>
+        </Group>
+
+        {loggedOnUser && (
+          <Button variant="light" onClick={handleLogout}>
+            Log out
+          </Button>
+        )}
+      </Container>
+    </header>
+  );
+}

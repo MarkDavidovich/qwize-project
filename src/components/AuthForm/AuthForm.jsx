@@ -11,24 +11,24 @@ import {
 } from "@mantine/core";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../auth/AuthProvider";
 
 const AuthForm = ({ type }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // const { handleLogin, handleRegister } = useAuth();
-  // const { handleAlert } = useAlerts();
+  const { handleLogin, handleRegister } = useAuth();
 
   const handleAuth = () => {
     if (type === "login") {
-      // handleLogin(email, password);
+      handleLogin(email, password);
     } else {
       if (password !== confirmPassword) {
-        // handleAlert("Passwords do not match!", true);
+        console.log("Passwords do not match!");
         return;
       }
-      // handleRegister(email, password);
+      handleRegister(email, password);
     }
   };
 
@@ -41,9 +41,8 @@ const AuthForm = ({ type }) => {
     <Container size={420} my={40}>
       <Title
         style={{
-          fontFamily: `Greycliff CF, var(--mantine-font-family)`,
           fontWeight: 900,
-         textAlign: "center",
+          textAlign: "center",
         }}
       >
         {type === "login" ? "Welcome back!" : "Create an account"}
@@ -107,6 +106,11 @@ const AuthForm = ({ type }) => {
             <Button disabled={isDisabled} onClick={handleAuth} fullWidth>
               {type === "login" ? "Login" : "Register"}
             </Button>
+            {type === "login" && (
+              <Button component={Link} to="/" variant="filled">
+                Try the game out!
+              </Button>
+            )}
           </Stack>
         </Stack>
       </Paper>

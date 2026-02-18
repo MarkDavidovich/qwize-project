@@ -1,6 +1,11 @@
-import style from "./Login.module.css";
+import AuthForm from "../../components/AuthForm/AuthForm";
+
 
 const Login = () => {
-  return <div>Login</div>;
+  return (
+    <>
+      <AuthForm type="login" />
+    </>
+  );
 };
 export default Login;

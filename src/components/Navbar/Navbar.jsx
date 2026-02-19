@@ -23,7 +23,7 @@ export function Navbar() {
         </Group>
 
         {loggedOnUser && (
-          <Button variant="light" onClick={handleLogout}>
+          <Button variant="subtle" color="red" onClick={handleLogout}>
             Log out
           </Button>
         )}

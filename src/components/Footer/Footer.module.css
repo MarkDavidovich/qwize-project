@@ -1,0 +1,23 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: lightgray;
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem;
+
+  @media (max-width: mantine-breakpoint-xs) {
+    flex-direction: column;
+  }
+}
+
+.links {
+  @media (max-width: mantine-breakpoint-xs) {
+    margin-top: var(--mantine-spacing-md);
+  }
+}

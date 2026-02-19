@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import { AuthProvider } from "./auth/AuthProvider";
 import { Navbar } from "./components/Navbar/Navbar";
+import { Footer } from "./components/Footer/Footer";
 
 function App() {
   const [authReady, setAuthReady] = useState(null);
@@ -23,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
         </Routes>
+        <Footer />
       </AuthProvider>
     </>
   );

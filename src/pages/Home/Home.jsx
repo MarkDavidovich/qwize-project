@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useAuth } from "../../auth/AuthProvider";
 import { Link } from "react-router-dom";
 
+// gal
+import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
+
 const Home = () => {
   const [selectedAmount, setSelectedAmount] = useState(5);
   const [activeDifficulty, setActiveDifficulty] = useState("Easy");
@@ -13,11 +16,15 @@ const Home = () => {
 
   const { loggedOnUser } = useAuth();
 
+  // gal
+  const [showQuestion, setShowQuestion] = useState(false);
+
   return (
     <div>
       <Title c={"blue"} fw={900} ta={"center"} mb={"xl"}>
         Ready to play Qwize?
       </Title>
+
       <Flex mih={50} gap="md" justify="center" align="center" direction="column" wrap="wrap">
         <Paper shadow="sm" p="xl" withBorder radius="md">
           {!loggedOnUser && (
@@ -65,11 +72,15 @@ const Home = () => {
             ))}
           </Group>
           <Divider mb="lg"></Divider>
-          <Button size="xl" color="yellow" fullWidth>
+          <Button size="xl" color="yellow" fullWidth onClick={() => setShowQuestion(true)}>
             Start Quiz!
           </Button>
         </Paper>
       </Flex>
+
+      {/* gal */}
+      <br />
+      {showQuestion && <QuestionCard />}
     </div>
   );
 };

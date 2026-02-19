@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Flex, Paper, Title, Group, Button, Text, SemiCircleProgress } from "@mantine/core";
 import AnswerList from "../AnswerList/AnswerList.jsx";
 
-const QuestionCard = ({ currentQuestion, onNext }) => {
+const QuestionCard = ({ currentQuestion, onNext, currTime, currTimePercentage }) => {
   const [selectedText, setSelectedText] = useState(null);
 
   // תשובה שראיתי באינטרנט לערבוב תשובות
@@ -36,13 +36,14 @@ const QuestionCard = ({ currentQuestion, onNext }) => {
         <AnswerList answers={answers} selectedText={selectedText} onSelectAnswer={handleSelectAnswer} />
         <Flex justify="center" mt="sm">
           <SemiCircleProgress
-            fillDirection="right-to-left"
+            transitionDuration={1000}
+            fillDirection="left-to-right"
             orientation="up"
             filledSegmentColor="blue"
             size={150}
             thickness={12}
-            value={40}
-            label="1:00"
+            value={currTimePercentage}
+            label={currTime / 1000}
             fw={500}
           />
         </Flex>

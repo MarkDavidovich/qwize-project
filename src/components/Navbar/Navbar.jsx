@@ -20,6 +20,11 @@ export function Navbar() {
           <NavLink to="/register" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
             Register
           </NavLink>
+          {loggedOnUser && (
+            <NavLink to="/leaderboards" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
+              Leaderboards
+            </NavLink>
+          )}
         </Group>
 
         {loggedOnUser && (

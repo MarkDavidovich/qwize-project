@@ -13,7 +13,7 @@ const Home = () => {
     <div>
       <Flex mih={50} gap="md" justify="center" align="center" direction="column" wrap="wrap">
         <Paper shadow="sm" p="xl">
-          <Text c="blue" size="xl" fw={500}>
+          <Text c="gray" size="xl" fw={500}>
             How many questions?
           </Text>
           <Group p="md" flex="1">
@@ -31,7 +31,7 @@ const Home = () => {
             ))}
           </Group>
 
-          <Text c="blue" size="xl" fw={500}>
+          <Text c="gray" size="xl" fw={500}>
             Difficulty
           </Text>
           <Group p="md">

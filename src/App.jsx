@@ -7,7 +7,8 @@ import { useState } from "react";
 import { AuthProvider } from "./auth/AuthProvider";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
-
+import Leaderboards from "./pages/Leaderboards/Leaderboards";
+import ProtectedRoute from "./auth/ProtectedRoute";
 
 function App() {
   const [authReady, setAuthReady] = useState(null);
@@ -24,6 +25,14 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="leaderboards"
+            element={
+              <ProtectedRoute>
+                <Leaderboards />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
         <Footer />
       </AuthProvider>

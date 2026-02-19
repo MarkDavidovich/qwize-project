@@ -8,6 +8,7 @@ import { AuthProvider } from "./auth/AuthProvider";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
 
+
 function App() {
   const [authReady, setAuthReady] = useState(null);
 

@@ -6,7 +6,7 @@ const AnswerList = ({ answers, selectedText, onSelectAnswer }) => {
   const hasAnswered = selectedText !== null;
 
   return (
-    <SimpleGrid cols={2} spacing="md">
+    <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
       {answers.map((ans) => (
         <Answer
           key={ans.text}

@@ -73,7 +73,7 @@ const Home = () => {
           </Group>
           <Divider mb="lg"></Divider>
           <Button size="xl" color="yellow" fullWidth onClick={() => setShowQuestion(true)}>
-            Start Quiz!
+            Start Qwizing!
           </Button>
         </Paper>
       </Flex>

@@ -1,21 +1,21 @@
+
 import style from "./AnswerList.module.css";
-import Answer from "./Answer/Answer.jsx";
-import { Group } from '@mantine/core';
+import { Group } from "@mantine/core";
+import Answer from "../Answer/Answer.jsx";
 
-
-const AnswerList = ({ answers }) => {
+const AnswerList = ({ answers, selectedText, onSelectAnswer }) => {
   return (
-    <div>
-      <Group gap="xl" grow>
-        {answers.map((answer) => (
-          <Answer
-            key={answer.id}
-            text={answer.text}
-            isCorrect={answer.isCorrect}
-          />
-        ))}
-      </Group>
-    </div>
+    <Group grow wrap="wrap" gap="md">
+      {answers.map((ans) => (
+        <Answer
+          key={ans.text}
+          text={ans.text}
+          isCorrect={ans.isCorrect}
+          selected={selectedText === ans.text}
+          onSelect={() => onSelectAnswer(ans)}
+        />
+      ))}
+    </Group>
   );
 };
 

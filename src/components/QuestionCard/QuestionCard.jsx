@@ -1,27 +1,43 @@
 import style from "./QuestionCard.module.css";
-import { Anchor, Button, Divider, Flex, Group, Paper, Text, Title } from "@mantine/core";
+import { useState } from "react";
+import { Flex, Paper, Title, Group, Button, Text } from "@mantine/core";
+import { triviaData } from "../../lib/DummyData.js";
+import AnswerList from "../AnswerList/AnswerList.jsx";
 
 
 const QuestionCard = () => {
+  const [selectedText, setSelectedText] = useState(null);
+
+  const currentQuestion = triviaData[0];
+
+  const answers = [
+    ...currentQuestion.incorrect_answers.map((text) => ({
+      text,
+      isCorrect: false,
+    })),
+    { text: currentQuestion.correct_answer, isCorrect: true },
+  ];
+
+  function handleSelectAnswer(answerObj) {
+    if (selectedText !== null) return; // prevent changing after first click
+    setSelectedText(answerObj.text);
+  }
+
   return (
-    <>
-      <Flex mih={50} gap="md" justify="center" align="center" direction="column" wrap="wrap">
-        <Paper shadow="sm" p="xl" withBorder radius="md">
+    <Flex justify="center" align="center" direction="column">
+      <Paper shadow="sm" p="xl" withBorder radius="md" w={520}>
+        <Title order={3} mb="md">
+          {currentQuestion.question}
+        </Title>
 
-          <Text c="gray" size="xl" fw={500}>
-            How many questions?
-          </Text>
-
-
-          <Text c="gray" size="xl" fw={500}>
-            Difficulty
-          </Text>
-
-        </Paper>
-      </Flex>
-    </>
+        <AnswerList
+          answers={answers}
+          selectedText={selectedText}
+          onSelectAnswer={handleSelectAnswer}
+        />
+      </Paper>
+    </Flex>
   );
 };
-
 
 export default QuestionCard;

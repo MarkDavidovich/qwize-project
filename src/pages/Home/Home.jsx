@@ -1,6 +1,7 @@
-import { Button, Divider, Flex, Group, Paper, Text } from "@mantine/core";
+import { Button, Divider, Flex, Group, Paper, Text, Title } from "@mantine/core";
 import style from "./Home.module.css";
 import { useState } from "react";
+import { useAuth } from "../../auth/AuthProvider";
 
 const Home = () => {
   const [selectedAmount, setSelectedAmount] = useState(5);
@@ -11,8 +12,11 @@ const Home = () => {
 
   return (
     <div>
+      <Title c={"blue"} fw={900} ta={"center"} mb={"xl"}>
+        Ready to play Qwize?
+      </Title>
       <Flex mih={50} gap="md" justify="center" align="center" direction="column" wrap="wrap">
-        <Paper shadow="sm" p="xl">
+        <Paper shadow="sm" p="xl" withBorder radius="md">
           <Text c="gray" size="xl" fw={500}>
             How many questions?
           </Text>

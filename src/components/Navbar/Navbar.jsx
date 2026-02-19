@@ -14,12 +14,16 @@ export function Navbar() {
           <NavLink to="/" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
             Home
           </NavLink>
-          <NavLink to="/login" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
-            Login
-          </NavLink>
-          <NavLink to="/register" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
-            Register
-          </NavLink>
+          {!loggedOnUser && (
+            <>
+              <NavLink to="/login" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
+                Login
+              </NavLink>
+              <NavLink to="/register" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
+                Register
+              </NavLink>
+            </>
+          )}
           {loggedOnUser && (
             <NavLink to="/leaderboards" className={({ isActive }) => `${isActive ? classes.link + " " + classes.active : classes.link}`}>
               Leaderboards

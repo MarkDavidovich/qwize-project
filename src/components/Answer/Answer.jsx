@@ -1,25 +1,16 @@
 import style from "./Answer.module.css";
-import { Button } from '@mantine/core';
+import { Button } from "@mantine/core";
 
-const [selected, setSelected] = useState(0);
-
-function handleClick() {
-  setSelected(true);
-}
-
-const Answer = ({ text, isCorrect, handleClick }) => {
-
-  return
-
-  <>
+const Answer = ({ text, isCorrect, selected, onSelect }) => {
+  return (
     <Button
-      onClick={handleClick}
+      onClick={onSelect}
       color={selected && isCorrect ? "red" : "blue"}
+      fullWidth
     >
       {text}
     </Button>
-
-  </>;
+  );
 };
 
 export default Answer;

@@ -1,12 +1,10 @@
 import style from "./QuestionCard.module.css";
 import { useState } from "react";
-import { Flex, Paper, Title, Group, Button, Text } from "@mantine/core";
+import { Flex, Paper, Title, Group, Button, Text, SemiCircleProgress } from "@mantine/core";
 import AnswerList from "../AnswerList/AnswerList.jsx";
-
 
 const QuestionCard = ({ currentQuestion, onNext }) => {
   const [selectedText, setSelectedText] = useState(null);
-
 
   // תשובה שראיתי באינטרנט לערבוב תשובות
   const answers = useState(() => {
@@ -30,16 +28,24 @@ const QuestionCard = ({ currentQuestion, onNext }) => {
 
   return (
     <Flex justify="center" align="center" direction="column">
-      <Paper shadow="sm" p="xl" withBorder radius="md" w={520}>
+      <Paper shadow="sm" p="xl" withBorder radius="md" w={"100%"}>
         <Title order={3} mb="md">
           {currentQuestion.question}
         </Title>
 
-        <AnswerList
-          answers={answers}
-          selectedText={selectedText}
-          onSelectAnswer={handleSelectAnswer}
-        />
+        <AnswerList answers={answers} selectedText={selectedText} onSelectAnswer={handleSelectAnswer} />
+        <Flex justify="center" mt="sm">
+          <SemiCircleProgress
+            fillDirection="right-to-left"
+            orientation="up"
+            filledSegmentColor="blue"
+            size={150}
+            thickness={12}
+            value={40}
+            label="1:00"
+            fw={500}
+          />
+        </Flex>
       </Paper>
     </Flex>
   );

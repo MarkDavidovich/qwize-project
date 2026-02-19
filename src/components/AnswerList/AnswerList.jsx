@@ -1,13 +1,12 @@
-
 import style from "./AnswerList.module.css";
-import { Group } from "@mantine/core";
+import { Group, SimpleGrid } from "@mantine/core";
 import Answer from "../Answer/Answer.jsx";
 
 const AnswerList = ({ answers, selectedText, onSelectAnswer }) => {
   const hasAnswered = selectedText !== null;
 
   return (
-    <Group grow wrap="wrap" gap="md">
+    <SimpleGrid cols={2} spacing="md">
       {answers.map((ans) => (
         <Answer
           key={ans.text}
@@ -18,7 +17,7 @@ const AnswerList = ({ answers, selectedText, onSelectAnswer }) => {
           onSelect={() => onSelectAnswer(ans)}
         />
       ))}
-    </Group>
+    </SimpleGrid>
   );
 };
 

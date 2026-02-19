@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { triviaData } from "../../lib/DummyData.js";
 import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
-import { Container, Title, Text } from "@mantine/core";
+import { Container, Title, Text, Progress, Flex } from "@mantine/core";
 
 const Quiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -33,7 +33,7 @@ const Quiz = () => {
       <Text ta="center" c="dimmed" mb="sm">
         Question {currentIndex + 1} of {triviaData.length}
       </Text>
-
+      <Progress mb={"lg"} value={30}></Progress>
       <QuestionCard key={triviaData[currentIndex].id} currentQuestion={triviaData[currentIndex]} onNext={handleNextQuestion} />
     </Container>
   );

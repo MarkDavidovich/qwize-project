@@ -48,3 +48,17 @@ export const triviaData = [
     incorrect_answers: ["The Beatles", "Led Zeppelin", "Pink Floyd"],
   },
 ];
+
+export const leaderboardData = [
+  { rank: 1, name: "Alice Johnson", score: 2850, accuracy: "94%", avatar: "" },
+  {
+    rank: 2,
+    name: "COCO LUCAS",
+    score: 2420,
+    accuracy: "89%",
+    avatar: "",
+  },
+  { rank: 3, name: "Bob Smith", score: 2100, accuracy: "82%", avatar: "" },
+  { rank: 4, name: "Charlie Brown", score: 1950, accuracy: "78%", avatar: "" },
+  { rank: 5, name: "Diana Prince", score: 1800, accuracy: "75%", avatar: "" },
+];

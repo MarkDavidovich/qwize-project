@@ -7,6 +7,7 @@ import { useState } from "react";
 import { AuthProvider } from "./auth/AuthProvider";
 import { Navbar } from "./components/Navbar/Navbar";
 
+
 function App() {
   const [authReady, setAuthReady] = useState(null);
 

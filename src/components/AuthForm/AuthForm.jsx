@@ -41,6 +41,7 @@ const AuthForm = ({ type }) => {
     <Container size={420} my={40}>
       <Title
         style={{
+          color: "#1c7ed6",
           fontWeight: 900,
           textAlign: "center",
         }}

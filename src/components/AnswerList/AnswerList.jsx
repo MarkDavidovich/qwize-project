@@ -4,6 +4,8 @@ import { Group } from "@mantine/core";
 import Answer from "../Answer/Answer.jsx";
 
 const AnswerList = ({ answers, selectedText, onSelectAnswer }) => {
+  const hasAnswered = selectedText !== null;
+
   return (
     <Group grow wrap="wrap" gap="md">
       {answers.map((ans) => (
@@ -12,6 +14,7 @@ const AnswerList = ({ answers, selectedText, onSelectAnswer }) => {
           text={ans.text}
           isCorrect={ans.isCorrect}
           selected={selectedText === ans.text}
+          hasAnswered={hasAnswered}
           onSelect={() => onSelectAnswer(ans)}
         />
       ))}

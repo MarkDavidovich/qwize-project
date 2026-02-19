@@ -1,24 +1,14 @@
 import style from "./Leaderboards.module.css";
 
-import { 
-  Container, 
-  Table, 
-  Avatar, 
-  Text, 
-  Group, 
-  Title, 
-  Paper, 
-  Badge 
-} from '@mantine/core'; 
+import { Container, Table, Avatar, Text, Group, Title, Paper, Badge } from "@mantine/core";
 
 import { leaderboardData } from "../../lib/DummyData.js";
 
 const Leaderboards = () => {
-
   const rows = leaderboardData.map((user) => (
     <Table.Tr key={user.rank}>
       <Table.Td>
-        <Text fw={700} c={user.rank <= 3 ? 'blue' : 'gray'}>
+        <Text fw={700} c={user.rank <= 3 ? "blue" : "gray"}>
           #{user.rank}
         </Text>
       </Table.Td>
@@ -43,15 +33,13 @@ const Leaderboards = () => {
     </Table.Tr>
   ));
 
-
-
   return (
     <Container size="md" py="xl">
       <Paper shadow="sm" radius="md" p="xl" withBorder>
-        <Title order={2} mb="lg" textAlign="center">
-          🏆 Top Players 
+        <Title order={2} mb="lg" ta="center">
+          🏆 Top Players
         </Title>
-        
+
         <Table verticalSpacing="md" highlightOnHover>
           <Table.Thead>
             <Table.Tr>
@@ -67,6 +55,5 @@ const Leaderboards = () => {
     </Container>
   );
 };
-
 
 export default Leaderboards;

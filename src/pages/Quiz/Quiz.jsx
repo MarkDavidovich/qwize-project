@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { triviaData } from "../../lib/DummyData.js";
 import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
@@ -6,6 +6,7 @@ import { Container, Title, Text } from "@mantine/core";
 
 const Quiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(5000);
   const navigate = useNavigate();
 
   const handleNextQuestion = () => {
@@ -16,17 +17,24 @@ const Quiz = () => {
     }
   };
 
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      handleNextQuestion();
+    }, timeLeft);
+
+    return () => {
+      clearInterval(timeOutId);
+      setTimeLeft(5000);
+    };
+  }, [currentIndex]);
+
   return (
     <Container size="sm" py="xl">
       <Text ta="center" c="dimmed" mb="sm">
         Question {currentIndex + 1} of {triviaData.length}
       </Text>
-      
-      <QuestionCard 
-        key={triviaData[currentIndex].id}
-        currentQuestion={triviaData[currentIndex]} 
-        onNext={handleNextQuestion} 
-      />
+
+      <QuestionCard key={triviaData[currentIndex].id} currentQuestion={triviaData[currentIndex]} onNext={handleNextQuestion} />
     </Container>
   );
 };

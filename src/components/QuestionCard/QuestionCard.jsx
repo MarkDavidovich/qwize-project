@@ -1,26 +1,31 @@
 import style from "./QuestionCard.module.css";
 import { useState } from "react";
 import { Flex, Paper, Title, Group, Button, Text } from "@mantine/core";
-import { triviaData } from "../../lib/DummyData.js";
 import AnswerList from "../AnswerList/AnswerList.jsx";
 
 
-const QuestionCard = () => {
+const QuestionCard = ({ currentQuestion, onNext }) => {
   const [selectedText, setSelectedText] = useState(null);
 
-  const currentQuestion = triviaData[0];
 
-  const answers = [
-    ...currentQuestion.incorrect_answers.map((text) => ({
-      text,
-      isCorrect: false,
-    })),
-    { text: currentQuestion.correct_answer, isCorrect: true },
-  ];
+  // תשובה שראיתי באינטרנט לערבוב תשובות
+  const answers = useState(() => {
+    return [
+      ...currentQuestion.incorrect_answers.map((text) => ({
+        text,
+        isCorrect: false,
+      })),
+      { text: currentQuestion.correct_answer, isCorrect: true },
+    ].sort(() => Math.random() - 0.5);
+  })[0];
 
-  function handleSelectAnswer(answerObj) {
-    if (selectedText !== null) return; // prevent changing after first click
-    setSelectedText(answerObj.text);
+  function handleSelectAnswer(answer) {
+    if (selectedText !== null) return;
+    setSelectedText(answer.text);
+
+    setTimeout(() => {
+      onNext();
+    }, 1000);
   }
 
   return (

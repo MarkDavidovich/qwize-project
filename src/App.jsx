@@ -9,6 +9,7 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
 import Leaderboards from "./pages/Leaderboards/Leaderboards";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import Quiz from "./pages/Quiz/Quiz";
 
 function App() {
   const [authReady, setAuthReady] = useState(null);
@@ -26,10 +27,18 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route
-            path="leaderboards"
+            path="/leaderboards"
             element={
               <ProtectedRoute>
                 <Leaderboards />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/quiz"
+            element={
+              <ProtectedRoute>
+                <Quiz />
               </ProtectedRoute>
             }
           />

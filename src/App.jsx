@@ -9,6 +9,7 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
 import Leaderboards from "./pages/Leaderboards/Leaderboards";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import PlayerStatsProvider from "./store/PlayerStatsProvider";
 import Quiz from "./pages/Quiz/Quiz";
 
 function App() {
@@ -21,22 +22,24 @@ function App() {
           setAuthReady(true);
         }}
       >
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/leaderboards"
-            element={
-              <ProtectedRoute>
-                <Leaderboards />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/quiz/:difficulty/:amount" element={<Quiz />} />
-        </Routes>
-        <Footer />
+        <PlayerStatsProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/leaderboards"
+              element={
+                <ProtectedRoute>
+                  <Leaderboards />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/quiz/:difficulty/:amount" element={<Quiz />} />
+          </Routes>
+          <Footer />
+        </PlayerStatsProvider>
       </AuthProvider>
     </>
   );

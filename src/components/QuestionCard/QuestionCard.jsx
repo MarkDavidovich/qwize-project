@@ -2,9 +2,12 @@ import style from "./QuestionCard.module.css";
 import { useState } from "react";
 import { Flex, Paper, Title, Group, Button, Text, SemiCircleProgress } from "@mantine/core";
 import AnswerList from "../AnswerList/AnswerList.jsx";
+import { usePlayerStats } from "../../store/player-stats-context.js";
 
 const QuestionCard = ({ currentQuestion, onNext, currTime, currTimePercentage, handleAnswering }) => {
   const [selectedText, setSelectedText] = useState(null);
+
+  const { handleCorrectAnswer } = usePlayerStats();
 
   // תשובה שראיתי באינטרנט לערבוב תשובות
   const answers = useState(() => {
@@ -18,9 +21,16 @@ const QuestionCard = ({ currentQuestion, onNext, currTime, currTimePercentage, h
   })[0];
 
   function handleSelectAnswer(answer) {
-    if (selectedText !== null) return;
+    if (selectedText !== null) {
+      return;
+    }
+
     setSelectedText(answer.text);
     handleAnswering();
+
+    if (answer.isCorrect) {
+      handleCorrectAnswer();
+    }
 
     setTimeout(() => {
       onNext();

@@ -1,10 +1,16 @@
 import style from "./Leaderboards.module.css";
-
 import { Container, Table, Avatar, Text, Group, Title, Paper, Badge } from "@mantine/core";
-
 import { leaderboardData } from "../../lib/DummyData.js";
+import { usePlayerStats } from "../../store/player-stats-context.js";
+import { formatTime } from "../../lib/helperFunctions.js";
 
 const Leaderboards = () => {
+  const { completedQuiz, correctAnswers, totalQuestions, totalScore, timeElapsed } = usePlayerStats();
+
+  const stats = usePlayerStats();
+
+  const formattedTime = formatTime(timeElapsed);
+
   const rows = leaderboardData.map((user) => (
     <Table.Tr key={user.rank}>
       <Table.Td>
@@ -35,6 +41,13 @@ const Leaderboards = () => {
 
   return (
     <Container size="md" py="xl">
+      {completedQuiz && (
+        <Paper>
+          {" "}
+          accuracy: {`${correctAnswers} / ${totalQuestions}`}, total time: {formattedTime} , total score: {totalScore}
+        </Paper>
+      )}
+
       <Paper shadow="sm" radius="md" p="xl" withBorder>
         <Title order={2} mb="lg" ta="center">
           🏆 Top Players

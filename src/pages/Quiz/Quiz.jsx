@@ -5,6 +5,7 @@ import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
 import { Container, Title, Text, Progress, Flex, Loader, Center } from "@mantine/core";
 import { TIME_PER_QUESTION, ONE_SECOND } from "../../lib/constants.js";
 import { calculatePercentage } from "../../lib/helperFunctions.js";
+import { usePlayerStats } from "../../store/player-stats-context.js";
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -16,12 +17,17 @@ const Quiz = () => {
   const navigate = useNavigate();
 
   const { difficulty, amount } = useParams();
+  const { handleTimer, handleResetStats, handleTotalQuestions, handleChosenDifficulty, handleCompleteQuiz } = usePlayerStats();
 
   useEffect(() => {
     const loadQuestions = async () => {
       try {
         const data = await getQuestions(difficulty, amount);
+        handleResetStats();
         setQuestions(data);
+        handleTimer(true);
+        handleTotalQuestions(amount);
+        handleChosenDifficulty(difficulty);
       } catch (error) {
         console.error("Failed to load questions:", error);
       } finally {
@@ -37,6 +43,7 @@ const Quiz = () => {
       setCurrentIndex((next) => next + 1);
       setCurrTime(TIME_PER_QUESTION);
     } else {
+      handleCompleteQuiz(true);
       navigate("/leaderboards");
     }
   };

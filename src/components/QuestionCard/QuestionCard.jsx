@@ -26,6 +26,8 @@ const QuestionCard = ({ currentQuestion, onNext, currTime, currTimePercentage })
     }, 1000);
   }
 
+  const timeBarColor = currTime > 5000 ? "green" : currTime < 3000 ? "red" : "yellow";
+
   return (
     <Flex justify="center" align="center" direction="column">
       <Paper shadow="sm" p="xl" withBorder radius="md" w={"100%"}>
@@ -39,7 +41,7 @@ const QuestionCard = ({ currentQuestion, onNext, currTime, currTimePercentage })
             transitionDuration={1000}
             fillDirection="left-to-right"
             orientation="up"
-            filledSegmentColor="blue"
+            filledSegmentColor={timeBarColor}
             size={150}
             thickness={12}
             value={currTimePercentage}

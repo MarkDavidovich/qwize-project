@@ -14,7 +14,7 @@ const Quiz = () => {
 
   const navigate = useNavigate();
 
-  const {difficulty, amount} = useParams();
+  const { difficulty, amount } = useParams();
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -80,7 +80,6 @@ const Quiz = () => {
 
   return (
     <Container size="sm" py="xl">
-
       <Flex justify="center" align="center" gap="xs" mb="sm">
         <Text
           size="xs"
@@ -89,13 +88,7 @@ const Quiz = () => {
           px="xs"
           py={2}
           c="white"
-          bg={
-            currentQuestion.difficulty === "easy"
-              ? "green"
-              : currentQuestion.difficulty === "medium"
-              ? "orange"
-              : "red"
-          }
+          bg={currentQuestion.difficulty === "easy" ? "green" : currentQuestion.difficulty === "medium" ? "orange" : "red"}
           style={{ borderRadius: "100px" }}
         >
           {currentQuestion.difficulty}

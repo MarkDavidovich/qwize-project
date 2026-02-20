@@ -32,7 +32,12 @@ export function Navbar() {
 
         {loggedOnUser && (
           <Flex justify="center" align="center">
-            <Button variant="transparent" onClick={console.log("User Profile?")}>
+            <Button
+              variant="transparent"
+              onClick={() => {
+                console.log("User Profile?");
+              }}
+            >
               {loggedOnUser.email.split("@")[0]}
             </Button>
             <Button variant="subtle" color="red" onClick={handleLogout}>

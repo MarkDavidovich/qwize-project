@@ -67,7 +67,7 @@ const Home = () => {
             ))}
           </Group>
           <Divider mb="lg"></Divider>
-          <Button size="xl" color="yellow" fullWidth component={Link} to="/quiz">
+          <Button size="xl" color="yellow" fullWidth component={Link} to={`/quiz/${activeDifficulty}/${selectedAmount}`}>
             Start Qwizing!
           </Button>
         </Paper>

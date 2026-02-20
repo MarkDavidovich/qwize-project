@@ -35,7 +35,7 @@ function App() {
             }
           />
           <Route
-            path="/quiz"
+            path="/quiz/:difficulty/:amount"
             element={
               <ProtectedRoute>
                 <Quiz />

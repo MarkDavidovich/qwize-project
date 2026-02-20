@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getQuestions } from "../../lib/APIQuestions.js";
 import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
 import { Container, Title, Text, Progress, Flex, Loader, Center } from "@mantine/core";
@@ -14,10 +14,12 @@ const Quiz = () => {
 
   const navigate = useNavigate();
 
+  const {difficulty, amount} = useParams();
+
   useEffect(() => {
     const loadQuestions = async () => {
       try {
-        const data = await getQuestions();
+        const data = await getQuestions(difficulty, amount);
         setQuestions(data);
       } catch (error) {
         console.error("Failed to load questions:", error);
@@ -26,7 +28,7 @@ const Quiz = () => {
       }
     };
     loadQuestions();
-  }, []);
+  }, [difficulty, amount]);
 
   const handleNextQuestion = () => {
     if (currentIndex < questions.length - 1) {
@@ -78,9 +80,31 @@ const Quiz = () => {
 
   return (
     <Container size="sm" py="xl">
-      <Text ta="center" c="dimmed" mb="sm">
-        Question {currentIndex + 1} of {questions.length}
-      </Text>
+
+      <Flex justify="center" align="center" gap="xs" mb="sm">
+        <Text
+          size="xs"
+          fw={700}
+          tt="uppercase"
+          px="xs"
+          py={2}
+          c="white"
+          bg={
+            currentQuestion.difficulty === "easy"
+              ? "green"
+              : currentQuestion.difficulty === "medium"
+              ? "orange"
+              : "red"
+          }
+          style={{ borderRadius: "100px" }}
+        >
+          {currentQuestion.difficulty}
+        </Text>
+        <Text c="dimmed" size="sm">
+          Question {currentIndex + 1} of {questions.length}
+        </Text>
+      </Flex>
+
       <Progress mb={"lg"} value={currQuestionPercentage} transitionDuration={500}></Progress>
       <QuestionCard
         key={currentQuestion.id}

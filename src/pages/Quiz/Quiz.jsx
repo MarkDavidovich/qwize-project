@@ -5,18 +5,17 @@ import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
 import { Container, Title, Text, Progress, Flex, Loader, Center } from "@mantine/core";
 import { TIME_PER_QUESTION, ONE_SECOND } from "../../lib/constants.js";
 import { calculatePercentage } from "../../lib/helperFunctions.js";
-import { useAnswering } from "../../store/answering-context.js";
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currTime, setCurrTime] = useState(TIME_PER_QUESTION);
   const [loading, setLoading] = useState(true);
+  const [isAnswering, setAnswering] = useState(false);
 
   const navigate = useNavigate();
 
   const { difficulty, amount } = useParams();
-  const { isAnswering, setAnswering } = useAnswering();
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -107,6 +106,9 @@ const Quiz = () => {
         onNext={handleNextQuestion}
         currTime={currTime}
         currTimePercentage={currTimePercentage}
+        handleAnswering={() => {
+          setAnswering(true);
+        }}
       />
     </Container>
   );

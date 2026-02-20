@@ -10,6 +10,7 @@ import { Footer } from "./components/Footer/Footer";
 import Leaderboards from "./pages/Leaderboards/Leaderboards";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import Quiz from "./pages/Quiz/Quiz";
+import { AnsweringProvider } from "./store/AnsweringProvider";
 
 function App() {
   const [authReady, setAuthReady] = useState(null);
@@ -38,7 +39,9 @@ function App() {
             path="/quiz/:difficulty/:amount"
             element={
               <ProtectedRoute>
-                <Quiz />
+                <AnsweringProvider>
+                  <Quiz />
+                </AnsweringProvider>
               </ProtectedRoute>
             }
           />

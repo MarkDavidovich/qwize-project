@@ -1,9 +1,8 @@
-import { Anchor, Button, Divider, Flex, Group, Paper, Text, Title } from "@mantine/core";
+import { Anchor, Button, Divider, Flex, Group, Paper, SimpleGrid, Text, Title } from "@mantine/core";
 import style from "./Home.module.css";
 import { useState } from "react";
 import { useAuth } from "../../auth/AuthProvider";
 import { Link } from "react-router-dom";
-
 
 const Home = () => {
   const [selectedAmount, setSelectedAmount] = useState(5);
@@ -16,12 +15,12 @@ const Home = () => {
 
   return (
     <div>
-      <Title c={"blue"} fw={900} ta={"center"} mb={"xl"}>
+      <Title c={"blue"} fw={900} ta={"center"} mb={"xl"} visibleFrom="sm">
         Ready to play Qwize?
       </Title>
 
       <Flex mih={50} gap="md" justify="center" align="center" direction="column" wrap="wrap">
-        <Paper shadow="sm" p="xl" withBorder radius="md">
+        <Paper shadow="sm" p="xl" withBorder radius="md" mx={"1rem"}>
           {!loggedOnUser && (
             <Text ta={"center"} mb={"md"} c={"gray"} fw={500} size="xl">
               <Anchor component={Link} to="/login" c={"yellow"} fw={500}>
@@ -30,10 +29,11 @@ const Home = () => {
               for the full experience!
             </Text>
           )}
-          <Text c="gray" size="xl" fw={500}>
+          <Text c="gray" size="xl" fw={500} mb="10px">
             How many questions?
           </Text>
-          <Group p="md" flex="1">
+
+          <SimpleGrid cols={{ base: 2, xs: 4 }} spacing="md" mb="lg">
             {amountOptions.map((value, idx) => (
               <Button
                 disabled={idx !== 0 && !loggedOnUser}
@@ -47,12 +47,12 @@ const Home = () => {
                 {value}
               </Button>
             ))}
-          </Group>
-
-          <Text c="gray" size="xl" fw={500}>
+          </SimpleGrid>
+          <Divider mb="sm"></Divider>
+          <Text c="gray" size="xl" fw={500} mb="10px">
             Difficulty
           </Text>
-          <Group p="md">
+          <SimpleGrid cols={{ base: 2, xs: 4 }} spacing="md" mb="lg">
             {difficultyOptions.map((value, idx) => (
               <Button
                 disabled={idx !== 0 && !loggedOnUser}
@@ -65,10 +65,10 @@ const Home = () => {
                 {value}
               </Button>
             ))}
-          </Group>
+          </SimpleGrid>
           <Divider mb="lg"></Divider>
           <Button size="xl" color="yellow" fullWidth component={Link} to={`/quiz/${activeDifficulty}/${selectedAmount}`}>
-            Start Qwizing!
+            Start
           </Button>
         </Paper>
       </Flex>

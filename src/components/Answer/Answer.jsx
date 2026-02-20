@@ -1,7 +1,6 @@
 import style from "./Answer.module.css";
 import { Button } from "@mantine/core";
 
-
 const Answer = ({ text, isCorrect, selected, hasAnswered, onSelect }) => {
   let color = "blue";
 
@@ -14,7 +13,7 @@ const Answer = ({ text, isCorrect, selected, hasAnswered, onSelect }) => {
   }
 
   return (
-    <Button onClick={onSelect} color={color} size="lg" radius="md">
+    <Button onClick={onSelect} color={color} size="lg" radius="md" fullWidth>
       {text}
     </Button>
   );

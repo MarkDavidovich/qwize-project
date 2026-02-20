@@ -31,7 +31,7 @@ const QuestionCard = ({ currentQuestion, onNext, currTime, currTimePercentage, h
 
   return (
     <Flex justify="center" align="center" direction="column">
-      <Paper shadow="sm" p="xl" withBorder radius="md" w={"100%"}>
+      <Paper shadow="sm" p="xl" withBorder radius="md" w={"100%"} mx={"1rem"}>
         <Title order={3} mb="md">
           {currentQuestion.question}
         </Title>

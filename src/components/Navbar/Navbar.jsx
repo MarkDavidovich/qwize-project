@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Box, Burger, Button, Container, Group } from "@mantine/core";
+import { Button, Container, Flex, Group, Text } from "@mantine/core";
 import classes from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
@@ -32,9 +31,14 @@ export function Navbar() {
         </Group>
 
         {loggedOnUser && (
-          <Button variant="subtle" color="red" onClick={handleLogout}>
-            Log out
-          </Button>
+          <Flex justify="center" align="center">
+            <Button variant="transparent" onClick={console.log("User Profile?")}>
+              {loggedOnUser.email.split("@")[0]}
+            </Button>
+            <Button variant="subtle" color="red" onClick={handleLogout}>
+              Log out
+            </Button>
+          </Flex>
         )}
       </Container>
     </header>

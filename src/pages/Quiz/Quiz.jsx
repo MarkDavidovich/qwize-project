@@ -5,6 +5,7 @@ import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
 import { Container, Title, Text, Progress, Flex, Loader, Center } from "@mantine/core";
 import { TIME_PER_QUESTION, ONE_SECOND } from "../../lib/constants.js";
 import { calculatePercentage } from "../../lib/helperFunctions.js";
+import { useAnswering } from "../../store/answering-context.js";
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -15,6 +16,7 @@ const Quiz = () => {
   const navigate = useNavigate();
 
   const { difficulty, amount } = useParams();
+  const { isAnswering, setAnswering } = useAnswering();
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -31,29 +33,29 @@ const Quiz = () => {
   }, [difficulty, amount]);
 
   const handleNextQuestion = () => {
+    setAnswering(false);
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((next) => next + 1);
+      setCurrTime(TIME_PER_QUESTION);
     } else {
       navigate("/leaderboards");
     }
   };
 
   useEffect(() => {
-    if (loading || questions.length === 0) {
+    if (loading || questions.length === 0 || isAnswering) {
       return;
     }
-
-    setCurrTime(TIME_PER_QUESTION);
 
     const intervalId = setInterval(() => {
       setCurrTime((prev) => prev - ONE_SECOND);
     }, ONE_SECOND);
 
     return () => clearInterval(intervalId);
-  }, [currentIndex, loading]);
+  }, [currentIndex, loading, isAnswering]);
 
   useEffect(() => {
-    if (currTime === 0) {
+    if (currTime <= 0) {
       handleNextQuestion();
     }
   }, [currTime]);

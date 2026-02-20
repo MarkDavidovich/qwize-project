@@ -2,9 +2,12 @@ import style from "./QuestionCard.module.css";
 import { useState } from "react";
 import { Flex, Paper, Title, Group, Button, Text, SemiCircleProgress } from "@mantine/core";
 import AnswerList from "../AnswerList/AnswerList.jsx";
+import { useAnswering } from "../../store/answering-context.js";
 
 const QuestionCard = ({ currentQuestion, onNext, currTime, currTimePercentage }) => {
   const [selectedText, setSelectedText] = useState(null);
+
+  const { setAnswering } = useAnswering();
 
   // תשובה שראיתי באינטרנט לערבוב תשובות
   const answers = useState(() => {
@@ -20,6 +23,7 @@ const QuestionCard = ({ currentQuestion, onNext, currTime, currTimePercentage })
   function handleSelectAnswer(answer) {
     if (selectedText !== null) return;
     setSelectedText(answer.text);
+    setAnswering(true);
 
     setTimeout(() => {
       onNext();

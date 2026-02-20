@@ -34,14 +34,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/quiz/:difficulty/:amount"
-            element={
-              <ProtectedRoute>
-                <Quiz />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/quiz/:difficulty/:amount" element={<Quiz />} />
         </Routes>
         <Footer />
       </AuthProvider>

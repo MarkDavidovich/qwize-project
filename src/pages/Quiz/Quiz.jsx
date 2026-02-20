@@ -11,6 +11,7 @@ const Quiz = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currTime, setCurrTime] = useState(TIME_PER_QUESTION);
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,22 +37,24 @@ const Quiz = () => {
   };
 
   useEffect(() => {
-    if (loading || questions.length === 0) return;
+    if (loading || questions.length === 0) {
+      return;
+    }
+
     setCurrTime(TIME_PER_QUESTION);
 
     const intervalId = setInterval(() => {
-      setCurrTime((prev) => {
-        if (prev <= ONE_SECOND) {
-          clearInterval(intervalId);
-          handleNextQuestion();
-        }
-
-        return prev - ONE_SECOND;
-      });
+      setCurrTime((prev) => prev - ONE_SECOND);
     }, ONE_SECOND);
 
     return () => clearInterval(intervalId);
-  }, [currentIndex, loading, questions]);
+  }, [currentIndex, loading]);
+
+  useEffect(() => {
+    if (currTime === 0) {
+      handleNextQuestion();
+    }
+  }, [currTime]);
 
   if (loading) {
     return (

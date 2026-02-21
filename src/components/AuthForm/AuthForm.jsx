@@ -1,26 +1,37 @@
-import { TextInput, PasswordInput, Button, Stack, Text, Anchor, Paper, Title, Container } from "@mantine/core";
+import { TextInput, PasswordInput, Button, Stack, Text, Anchor, Paper, Title, Container, Alert } from "@mantine/core";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
+import { IconAlertCircle } from "@tabler/icons-react";
 
 const AuthForm = ({ type }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const { handleLogin, handleRegister } = useAuth();
 
   const handleAuth = async () => {
+    setError(null);
     setLoading(true);
+
     if (type === "login") {
-      await handleLogin(email, password);
+      const result = await handleLogin(email, password);
+      if (result && !result.success) {
+        setError(result.error);
+      }
     } else {
       if (password !== confirmPassword) {
-        console.log("Passwords do not match!");
+        setError("Passwords do not match!");
+        setLoading(false);
         return;
       }
-      handleRegister(email, password);
+      const result = await handleRegister(email, password);
+      if (result && !result.success) {
+        setError(result.error);
+      }
     }
     setLoading(false);
   };
@@ -44,6 +55,12 @@ const AuthForm = ({ type }) => {
 
       <Paper withBorder shadow="md" p="xl" mt={30} radius="md">
         <Stack gap="md">
+          {error && (
+            <Alert variant="light" color="red" title="Authentication Error" icon={<IconAlertCircle />}>
+              {error}
+            </Alert>
+          )}
+
           <TextInput label="Email" placeholder="your_email@mail.com" type="email" required value={email} onChange={(ev) => setEmail(ev.target.value)} />
 
           <PasswordInput label="Password" placeholder="Your password" required mt="md" value={password} onChange={(ev) => setPassword(ev.target.value)} />

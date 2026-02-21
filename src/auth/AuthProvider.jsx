@@ -32,14 +32,16 @@ export function AuthProvider({ onAuthReady, children }) {
       });
 
       if (error) {
-        throw new Error(`Failed to login! ${error.message}`);
+        throw error;
       }
 
       setLoggedOnUser(data.user);
       console.log(`Logged in: ${data.user.email}`);
       navigate("/");
+      return { success: true };
     } catch (err) {
       console.log(`Error: ${err.message}`);
+      return { success: false, error: err.message };
     }
   };
 
@@ -53,14 +55,16 @@ export function AuthProvider({ onAuthReady, children }) {
       });
 
       if (error) {
-        throw new Error(`Failed to register! ${error.message}`);
+        throw error;
       }
 
       console.log(`Registration successful!`);
       setLoggedOnUser(data.user);
       navigate("/");
+      return { success: true };
     } catch (err) {
       console.log(`Error: ${err.message}`);
+      return { success: false, error: err.message };
     }
   };
 

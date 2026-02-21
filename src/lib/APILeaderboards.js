@@ -2,7 +2,7 @@ import { supabase } from "./supabase";
 
 export const getLeaderboards = async () => {
   try {
-    const { data, error } = supabase.from("leaderboards").select("*").order("score", { ascending: false }).limit(5);
+    const { data, error } = await supabase.from("leaderboards").select("*").order("score", { ascending: false }).limit(5);
 
     if (error) {
       console.error(`Error fetching top 5 results: ${error.message}`);

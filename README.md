@@ -1,16 +1,28 @@
-# React + Vite
+You got it. Let's make it punchy and actually sound like it was written by the people who built it.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+# Qwize
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A fast-paced, high-stakes trivia app designed to test your brain under pressure. Built with a modern stack for a smooth, "app-like" feel on any device.
 
-## React Compiler
+## Why Qwize?
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Race the Clock:** Every second counts. Our dynamic timer keeps the pressure on while you climb the ranks.
+- **Smart Scoring:** Points aren't just for correct answers—they scale with difficulty.
+- **Global Bragging Rights:** Integrated with Supabase to track high scores. Only your best run stays on the leaderboard.
+- **Sleek UI:** Powered by Mantine UI for a clean, distraction-free experience with custom modals and smooth transitions.
+- **Mobile First:** Whether you're on a desktop or a phone, the experience is seamless.
 
-## Expanding the ESLint configuration
+## 🛠 Built With
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend:** React + Vite
+- **Styling:** Mantine UI (fully responsive)
+- **Backend:** Supabase (Database & Auth)
+- **State:** React Context API (custom-built game engine)
+
+## Quick Start
+
+1. **Install:** `npm install`
+2. **Config:** Grab your Supabase URL/Key and pop them into a `.env` file.
+3. **Launch:** `npm run dev`

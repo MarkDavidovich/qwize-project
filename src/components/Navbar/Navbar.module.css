@@ -1,4 +1,6 @@
 .header {
+  position: sticky;
+  top: 0;
   height: 56px;
   margin-bottom: 2rem;
   background-color: var(--mantine-color-body);

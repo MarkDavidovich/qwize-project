@@ -25,10 +25,19 @@ const PlayerStatsProvider = ({ children }) => {
   };
 
   const handleCorrectAnswer = () => {
-    const points = { easy: 1, medium: 2, hard: 3 };
+    const pointsMap = { easy: 1, medium: 2, hard: 3 };
+    const points = pointsMap[chosenDifficulty.toLowerCase()] || 0;
 
-    setCorrectAnswers((prev) => prev + 1);
-    setTotalScore((prev) => prev + points[chosenDifficulty.toLowerCase()] || 0);
+    const newCorrectAnswers = correctAnswers + 1;
+    const newTotalScore = totalScore + points;
+
+    setCorrectAnswers(newCorrectAnswers);
+    setTotalScore(newTotalScore);
+
+    return {
+      newCorrectAnswers,
+      newTotalScore,
+    };
   };
 
   const handleTotalQuestions = (questionsAmount) => {

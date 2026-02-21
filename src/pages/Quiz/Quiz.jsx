@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getQuestions } from "../../lib/APIQuestions.js";
 import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
-import { Container, Title, Text, Progress, Flex, Loader, Center, Modal, Button } from "@mantine/core";
+import { Container, Title, Text, Progress, Flex, Loader, Center, Modal, Button, Group } from "@mantine/core";
 import { TIME_PER_QUESTION, ONE_SECOND } from "../../lib/constants.js";
 import { calculatePercentage } from "../../lib/helperFunctions.js";
 import { usePlayerStats } from "../../store/player-stats-context.js";
 import { useAuth } from "../../auth/AuthProvider";
 import { updateLeaderboard } from "../../lib/APILeaderboards.js";
+import style from "./Quiz.module.css";
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -16,6 +17,7 @@ const Quiz = () => {
   const [loading, setLoading] = useState(true);
   const [isAnswering, setAnswering] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [showQuitModal, setShowQuitModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -65,7 +67,7 @@ const Quiz = () => {
   };
 
   useEffect(() => {
-    if (loading || questions.length === 0 || isAnswering) {
+    if (loading || questions.length === 0 || isAnswering || showQuitModal) {
       return;
     }
 
@@ -74,7 +76,7 @@ const Quiz = () => {
     }, ONE_SECOND);
 
     return () => clearInterval(intervalId);
-  }, [currentIndex, loading, isAnswering]);
+  }, [currentIndex, loading, isAnswering, showQuitModal]);
 
   useEffect(() => {
     if (currTime <= 0) {
@@ -104,35 +106,38 @@ const Quiz = () => {
 
   return (
     <Container size="sm" py="xl">
-      <Flex justify="center" align="center" gap="xs" mb="sm">
-        <Text
-          size="xs"
-          fw={700}
-          tt="uppercase"
-          px="xs"
-          py={2}
-          c="white"
-          bg={currentQuestion.difficulty === "easy" ? "green" : currentQuestion.difficulty === "medium" ? "orange" : "red"}
-          style={{ borderRadius: "100px" }}
-        >
-          {currentQuestion.difficulty}
-        </Text>
-        <Text c="dimmed" size="sm">
-          Question {currentIndex + 1} of {questions.length}
-        </Text>
-      </Flex>
+      <div className={`${style.container}${showQuitModal ? style.blurred : ""}`}>
+        <Flex justify="center" align="center" gap="xs" mb="sm">
+          <Text
+            size="xs"
+            fw={700}
+            tt="uppercase"
+            px="xs"
+            py={2}
+            c="white"
+            bg={currentQuestion.difficulty === "easy" ? "green" : currentQuestion.difficulty === "medium" ? "orange" : "red"}
+            style={{ borderRadius: "100px" }}
+          >
+            {currentQuestion.difficulty}
+          </Text>
+          <Text c="dimmed" size="sm">
+            Question {currentIndex + 1} of {questions.length}
+          </Text>
+        </Flex>
 
-      <Progress mb={"lg"} value={currQuestionPercentage} transitionDuration={500}></Progress>
-      <QuestionCard
-        key={currentQuestion.id}
-        currentQuestion={currentQuestion}
-        onNext={handleNextQuestion}
-        currTime={currTime}
-        currTimePercentage={currTimePercentage}
-        handleAnswering={() => {
-          setAnswering(true);
-        }}
-      />
+        <Progress mb={"lg"} value={currQuestionPercentage} transitionDuration={500}></Progress>
+        <div className={`${style.container}${showQuitModal ? style.blurred : ""}`}></div>
+        <QuestionCard
+          key={currentQuestion.id}
+          currentQuestion={currentQuestion}
+          onNext={handleNextQuestion}
+          currTime={currTime}
+          currTimePercentage={currTimePercentage}
+          handleAnswering={() => {
+            setAnswering(true);
+          }}
+        />
+      </div>
 
       <Button
         variant="outline"
@@ -141,14 +146,45 @@ const Quiz = () => {
         mt="md"
         w="100%"
         onClick={() => {
-          if (window.confirm("Are you sure you want to finish the quiz now? Your current score will be saved as it is.")) {
-            handleCompleteQuiz(true);
-            navigate("/");
-          }
+          setShowQuitModal(true);
+          handleTimer(false);
         }}
       >
-        Finish Quiz
+        Quit
       </Button>
+
+      <Modal
+        opened={showQuitModal}
+        onClose={() => {
+          setShowQuitModal(false);
+          handleTimer(true);
+        }}
+        title="Leaving so soon?"
+        centered
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 5,
+        }}
+      >
+        <Text size="sm" mb="lg">
+          Are you sure you want to finish the quiz now? Your current progress will not be saved to the leaderboards.
+        </Text>
+
+        <Group justify="flex-end">
+          <Button variant="default" onClick={() => setShowQuitModal(false)}>
+            Stay and Finish
+          </Button>
+          <Button
+            color="red"
+            onClick={() => {
+              handleCompleteQuiz(false);
+              navigate("/");
+            }}
+          >
+            Yes, Quit Quiz
+          </Button>
+        </Group>
+      </Modal>
 
       <Modal
         opened={showRegisterModal}

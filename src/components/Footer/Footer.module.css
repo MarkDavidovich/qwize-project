@@ -16,9 +16,3 @@
     flex-direction: column;
   }
 }
-
-.links {
-  @media (max-width: mantine-breakpoint-xs) {
-    margin-top: var(--mantine-spacing-md);
-  }
-}

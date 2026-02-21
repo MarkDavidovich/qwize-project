@@ -28,7 +28,7 @@ const AuthForm = ({ type }) => {
   const isDisabled = email.length === 0 || password.length === 0 || (type === "register" && confirmPassword.length === 0);
 
   return (
-    <Container size={420} my={40}>
+    <Container size={420}>
       <Title
         style={{
           color: "#1c7ed6",

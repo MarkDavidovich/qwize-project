@@ -15,12 +15,11 @@ const Home = () => {
 
   return (
     <div>
-      <Title c={"blue"} fw={900} ta={"center"} mb={"xl"} visibleFrom="sm">
-        Ready to play Qwize?
-      </Title>
-
       <Flex mih={50} gap="md" justify="center" align="center" direction="column" wrap="wrap">
-        <Paper shadow="sm" p="xl" withBorder radius="md" mx={"1rem"}>
+        <Paper shadow="sm" p="xl" withBorder radius="md" mx={"1rem"} mb={"1rem"}>
+          <Title c={"blue"} fw={900} ta={"center"} order={2} mb="lg">
+            Ready to play Qwize?
+          </Title>
           {!loggedOnUser && (
             <Text ta={"center"} mb={"md"} c={"gray"} fw={500} size="xl">
               <Anchor component={Link} to="/login" c={"yellow"} fw={500}>

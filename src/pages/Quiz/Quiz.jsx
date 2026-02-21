@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getQuestions } from "../../lib/APIQuestions.js";
 import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
-import { Container, Title, Text, Progress, Flex, Loader, Center } from "@mantine/core";
+import { Container, Title, Text, Progress, Flex, Loader, Center, Modal, Button } from "@mantine/core";
 import { TIME_PER_QUESTION, ONE_SECOND } from "../../lib/constants.js";
 import { calculatePercentage } from "../../lib/helperFunctions.js";
 import { usePlayerStats } from "../../store/player-stats-context.js";
+import { useAuth } from "../../auth/AuthProvider";
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -13,11 +14,13 @@ const Quiz = () => {
   const [currTime, setCurrTime] = useState(TIME_PER_QUESTION);
   const [loading, setLoading] = useState(true);
   const [isAnswering, setAnswering] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
 
   const navigate = useNavigate();
 
   const { difficulty, amount } = useParams();
   const { handleTimer, handleResetStats, handleTotalQuestions, handleChosenDifficulty, handleCompleteQuiz } = usePlayerStats();
+  const { loggedOnUser } = useAuth();
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -44,7 +47,17 @@ const Quiz = () => {
       setCurrTime(TIME_PER_QUESTION);
     } else {
       handleCompleteQuiz(true);
-      navigate("/leaderboards");
+
+      const isEasyFive = String(difficulty).toLowerCase() === "easy" && Number(amount) === 5;
+      // debug info
+      console.log("[Quiz] completion check:", { difficulty, amount, isEasyFive, loggedOnUser });
+
+      if (!loggedOnUser && isEasyFive) {
+        console.log("[Quiz] showing register modal");
+        setShowRegisterModal(true);
+      } else {
+        navigate("/leaderboards");
+      }
     }
   };
 
@@ -117,6 +130,21 @@ const Quiz = () => {
           setAnswering(true);
         }}
       />
+
+      <Modal
+        opened={showRegisterModal}
+        onClose={() => {
+          setShowRegisterModal(false);
+          navigate("/register");
+        }}
+        title="Register to save your results"
+        centered
+      >
+        <Text mb="sm">Great job! To fully experience Qwize and have your scores saved, please register for an account.</Text>
+        <Button onClick={() => navigate("/register")} mr="sm">
+          Register Now
+        </Button>
+      </Modal>
     </Container>
   );
 };

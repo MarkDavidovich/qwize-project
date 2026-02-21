@@ -8,8 +8,6 @@ export const getLeaderboards = async () => {
       console.error(`Error fetching top 5 results: ${error.message}`);
     }
 
-    console.log(data);
-
     return data;
   } catch (err) {
     console.error(`Error: ${err}`);

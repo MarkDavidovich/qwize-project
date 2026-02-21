@@ -1,48 +1,71 @@
 import style from "./Leaderboards.module.css";
 import { Container, Table, Avatar, Text, Group, Title, Paper, Badge, Notification, Flex } from "@mantine/core";
-import { leaderboardData } from "../../lib/DummyData.js";
 import { usePlayerStats } from "../../store/player-stats-context.js";
 import { formatTime } from "../../lib/helperFunctions.js";
+import { getLeaderboards } from "../../lib/APILeaderboards.js";
+import { useEffect, useState } from "react";
 
 const Leaderboards = () => {
   const { completedQuiz, correctAnswers, totalQuestions, totalScore, timeElapsed } = usePlayerStats();
-
-  const stats = usePlayerStats();
+  const [topPlayers, setTopPlayers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const formattedTime = formatTime(timeElapsed);
 
-  const rows = leaderboardData.map((user) => (
-    <Table.Tr key={user.rank}>
-      <Table.Td>
-        <Text fw={700} c={user.rank <= 3 ? "blue" : "gray"}>
-          #{user.rank}
-        </Text>
-      </Table.Td>
-      <Table.Td>
-        <Group gap="sm">
-          <Avatar size={30} radius="xl" color="blue">
-            {user.name.charAt(0)}
-          </Avatar>
-          <Text size="sm" fw={500}>
-            {user.name}
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const data = await getLeaderboards();
+        setTopPlayers(data || []);
+      } catch (err) {
+        console.error(`Failed to load leaderboards: ${err}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLeaderboard();
+  }, []);
+
+  const rows = topPlayers.map((user, idx) => {
+    const rank = idx + 1;
+
+    return (
+      <Table.Tr key={user.id || user.user_email}>
+        <Table.Td>
+          <Text fw={700} c={rank <= 3 ? "blue" : "gray"}>
+            #{rank}
           </Text>
-        </Group>
-      </Table.Td>
-      <Table.Td>
-        <Badge variant="filled" color="teal">
-          {user.score.toLocaleString()} pts
-        </Badge>
-      </Table.Td>
-      <Table.Td>
-        <Text size="sm">{user.accuracy}</Text>
-      </Table.Td>
-    </Table.Tr>
-  ));
+        </Table.Td>
+        <Table.Td>
+          {/* <Group gap="sm"> */}
+          {/* <Avatar size={30} radius="xl" color="blue">
+              {user.user_email.charAt(0).toUpperCase()}
+            </Avatar> */}
+          <Text size="sm" fw={500}>
+            {user.user_email.split("@")[0]}
+          </Text>
+          {/* </Group> */}
+        </Table.Td>
+        <Table.Td>
+          <Badge variant="filled" color="blue">
+            {user.score.toLocaleString()} pts
+          </Badge>
+        </Table.Td>
+        <Table.Td>
+          <Text size="sm">{formatTime(user.time_taken)}</Text>
+        </Table.Td>
+      </Table.Tr>
+    );
+  });
 
   return (
     <Container size="md" mt="0">
       {completedQuiz && (
         <Paper mb="1rem" p="1rem">
+          <Title c={"blue"} fw={900} ta={"center"}>
+            Last quiz results
+          </Title>
           <Flex justify="center" align="center" gap="2rem">
             <Paper
               shadow="md"
@@ -96,21 +119,29 @@ const Leaderboards = () => {
       )}
 
       <Paper shadow="sm" radius="md" p="xl" withBorder>
-        <Title order={2} mb="lg" ta="center">
-          Top Players
-        </Title>
+        {topPlayers.length > 0 ? (
+          <>
+            <Title c={"blue"} fw={900} ta={"center"} order={2} mb="lg">
+              Top Players
+            </Title>
 
-        <Table verticalSpacing="md" highlightOnHover>
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Rank</Table.Th>
-              <Table.Th>Player</Table.Th>
-              <Table.Th>Score</Table.Th>
-              <Table.Th>Accuracy</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>{rows}</Table.Tbody>
-        </Table>
+            <Table verticalSpacing="md" highlightOnHover>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Rank</Table.Th>
+                  <Table.Th>Player</Table.Th>
+                  <Table.Th>Score</Table.Th>
+                  <Table.Th>Accuracy</Table.Th>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>{rows}</Table.Tbody>
+            </Table>
+          </>
+        ) : (
+          <Title c={"blue"} fw={900} ta={"center"}>
+            Nothing to display... yet!
+          </Title>
+        )}
       </Paper>
     </Container>
   );

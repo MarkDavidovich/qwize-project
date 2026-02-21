@@ -1,5 +1,5 @@
 import style from "./Leaderboards.module.css";
-import { Container, Table, Avatar, Text, Group, Title, Paper, Badge, Notification, Flex, Center, Loader } from "@mantine/core";
+import { Container, Table, Avatar, Text, Group, Title, Paper, Badge, Notification, Flex, Center, Loader, Box } from "@mantine/core";
 import { usePlayerStats } from "../../store/player-stats-context.js";
 import { formatTime } from "../../lib/helperFunctions.js";
 import { getLeaderboards } from "../../lib/APILeaderboards.js";
@@ -53,62 +53,45 @@ const Leaderboards = () => {
     );
   });
 
+  const quizResults = (
+    <>
+      <Flex className={style.statBox} direction={"column"} justify={"center"} align={"center"} p={"10px"} flex={"1"}>
+        <Text size="30px" fw={900} c={"white"}>
+          {totalScore}
+        </Text>
+        <Text size="17px" fw={500}>
+          score
+        </Text>
+      </Flex>
+      <Flex className={style.statBox} direction={"column"} justify={"center"} align={"center"} p={"10px"} flex={"2"}>
+        <Text size="30px" fw={900} c={"white"}>
+          {correctAnswers} correct
+        </Text>
+        <Text size="17px" fw={500}>
+          out of {totalQuestions}
+        </Text>
+      </Flex>
+      <Flex className={style.statBox} direction={"column"} justify={"center"} align={"center"} p={"10px"} flex={"1"}>
+        <Text size="30px" fw={900} c={"white"}>
+          {formattedTime}
+        </Text>
+        <Text size="17px" fw={500}>
+          time
+        </Text>
+      </Flex>
+    </>
+  );
+
   return (
-    <Container size="md" mt="0">
+    <Container size="md">
       {completedQuiz && (
-        <Paper mb="1rem" p="1rem">
-          <Title c={"blue"} fw={900} ta={"center"}>
+        <Paper p="1rem">
+          <Title c={"blue"} fw={900} ta={"center"} mb={"1rem"}>
             Last quiz results
           </Title>
-          <Flex justify="center" align="center" gap="2rem">
-            <Paper
-              shadow="md"
-              bg="blue"
-              radius={"50%"}
-              w={"130px"}
-              h={"130px"}
-              display="flex"
-              style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}
-            >
-              <Text size="30px" fw={900} c={"white"}>
-                {formattedTime}
-              </Text>
-              <Text size="17px" fw={500}>
-                total time
-              </Text>
-            </Paper>
-            <Paper
-              bg="blue"
-              radius={"50%"}
-              w={"160px"}
-              h={"160px"}
-              display="flex"
-              style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}
-            >
-              {" "}
-              <Text size="30px" fw={900} c={"white"}>
-                {correctAnswers} correct
-              </Text>
-              <Text size="17px" fw={500}>
-                out of {totalQuestions}
-              </Text>
-            </Paper>
-            <Paper
-              bg="blue"
-              radius={"50%"}
-              w={"130px"}
-              h={"130px"}
-              display="flex"
-              style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}
-            >
-              <Text size="30px" fw={900} c={"white"}>
-                {totalScore}
-              </Text>
-              <Text size="17px" fw={500}>
-                score
-              </Text>
-            </Paper>
-          </Flex>
+          <Paper bg="blue" radius="lg" display="flex">
+            <Flex className={style.results}>{quizResults}</Flex>
+          </Paper>
         </Paper>
       )}
 

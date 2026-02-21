@@ -15,3 +15,40 @@
   font-family: Outfit, var(--mantine-font-family);
   line-height: 1;
 }
+
+.results {
+  width: 100%;
+}
+
+.statBox {
+  margin-block: 12px;
+}
+
+.statBox:first-of-type {
+  border-right: 2px solid white;
+}
+
+.statBox:last-of-type {
+  border-left: 2px solid white;
+}
+
+@media (max-width: 30em) {
+  .results {
+    flex-direction: column;
+  }
+
+  .statBox {
+    margin-block: 0;
+    margin-inline: 12px;
+  }
+
+  .statBox:first-of-type {
+    border-right: none;
+    border-bottom: 2px solid white;
+  }
+
+  .statBox:last-of-type {
+    border-left: none;
+    border-top: 2px solid white;
+  }
+}

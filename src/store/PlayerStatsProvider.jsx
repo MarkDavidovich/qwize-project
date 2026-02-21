@@ -25,10 +25,10 @@ const PlayerStatsProvider = ({ children }) => {
   };
 
   const handleCorrectAnswer = () => {
-    const points = { Easy: 1, Medium: 2, Hard: 3 };
+    const points = { easy: 1, medium: 2, hard: 3 };
 
     setCorrectAnswers((prev) => prev + 1);
-    setTotalScore((prev) => prev + points[chosenDifficulty] || 0);
+    setTotalScore((prev) => prev + points[chosenDifficulty.toLowerCase()] || 0);
   };
 
   const handleTotalQuestions = (questionsAmount) => {

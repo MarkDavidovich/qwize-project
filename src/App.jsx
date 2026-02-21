@@ -12,8 +12,13 @@ import ProtectedRoute from "./auth/ProtectedRoute";
 import PlayerStatsProvider from "./store/PlayerStatsProvider";
 import Quiz from "./pages/Quiz/Quiz";
 
+import { useLocation } from "react-router-dom";
+
 function App() {
   const [authReady, setAuthReady] = useState(null);
+
+  const location = useLocation();
+  const hideNavBar = location.pathname.includes("/quiz");
 
   return (
     <>
@@ -23,7 +28,7 @@ function App() {
         }}
       >
         <PlayerStatsProvider>
-          <Navbar />
+          {!hideNavBar && <Navbar />}
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />} />

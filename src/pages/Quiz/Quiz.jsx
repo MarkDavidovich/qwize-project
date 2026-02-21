@@ -131,6 +131,22 @@ const Quiz = () => {
         }}
       />
 
+      <Button 
+        variant="outline" 
+        color="red"
+        size="md"
+        mt="md"
+        w="100%"
+        onClick={() => {
+          if (window.confirm("Are you sure you want to finish the quiz now? Your current score will be saved as it is.")) {
+            handleCompleteQuiz(true);
+            navigate("/");
+          }
+        }}
+      >
+        Finish Quiz
+      </Button>
+
       <Modal
         opened={showRegisterModal}
         onClose={() => {

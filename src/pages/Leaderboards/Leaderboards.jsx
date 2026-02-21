@@ -44,7 +44,6 @@ const Leaderboards = () => {
       {completedQuiz && (
         <Paper mb="1rem" p="1rem">
           <Flex justify="center" align="center" gap="2rem">
-            <Paper bg="blue" radius={"50%"} w={"80px"} h={"80px"}></Paper>
             <Paper
               shadow="md"
               bg="blue"
@@ -92,7 +91,6 @@ const Leaderboards = () => {
                 score
               </Text>
             </Paper>
-            <Paper bg="blue" radius={"50%"} w={"80px"} h={"80px"}></Paper>
           </Flex>
         </Paper>
       )}

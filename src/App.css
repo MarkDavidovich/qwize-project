@@ -1,9 +1,22 @@
 :root {
-  font-family: Greycliff CF, var(--mantine-font-family) !important;
+  font-family:
+    Greycliff CF,
+    var(--mantine-font-family) !important;
 }
 
 body {
-  font-family: Greycliff CF, var(--mantine-font-family);
+  font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
   margin: 0;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.container {
+  flex: 1;
+}

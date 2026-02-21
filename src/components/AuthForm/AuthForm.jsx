@@ -1,4 +1,4 @@
-import { TextInput, PasswordInput, Button, Stack, Text, Anchor, Paper, Title, Container, Alert } from "@mantine/core";
+import { TextInput, PasswordInput, Button, Stack, Text, Anchor, Paper, Title, Container, Dialog, Group } from "@mantine/core";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
@@ -55,11 +55,26 @@ const AuthForm = ({ type }) => {
 
       <Paper withBorder shadow="md" p="xl" mt={30} radius="md">
         <Stack gap="md">
-          {error && (
-            <Alert variant="light" color="red" title="Authentication Error" icon={<IconAlertCircle />}>
-              {error}
-            </Alert>
-          )}
+          <Dialog
+            opened={!!error}
+            withCloseButton
+            onClose={() => setError(null)}
+            size="lg"
+            radius="md"
+            p="xl"
+            bg="red"
+            style={{ color: "white" }}
+          >
+            <Text size="md" mb="xs" fw={700}>
+              Authentication Error
+            </Text>
+            <Group align="flex-start" wrap="nowrap">
+              <IconAlertCircle size={24} color="white" />
+              <Text size="sm" flex={1}>
+                {error}
+              </Text>
+            </Group>
+          </Dialog>
 
           <TextInput label="Email" placeholder="your_email@mail.com" type="email" required value={email} onChange={(ev) => setEmail(ev.target.value)} />
 

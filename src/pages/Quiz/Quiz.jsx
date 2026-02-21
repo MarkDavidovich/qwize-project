@@ -137,10 +137,10 @@ const Quiz = () => {
           setShowRegisterModal(false);
           navigate("/register");
         }}
-        title="Register to save your results"
+        title="Great job!"
         centered
       >
-        <Text mb="sm">Great job! To fully experience Qwize and have your scores saved, please register for an account.</Text>
+        <Text mb="sm">To fully experience Qwize and have your scores saved, please register for an account.</Text>
         <Button onClick={() => navigate("/register")} mr="sm">
           Register Now
         </Button>

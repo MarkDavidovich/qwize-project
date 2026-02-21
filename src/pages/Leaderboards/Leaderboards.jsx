@@ -1,5 +1,5 @@
 import style from "./Leaderboards.module.css";
-import { Container, Table, Avatar, Text, Group, Title, Paper, Badge, Notification, Flex } from "@mantine/core";
+import { Container, Table, Avatar, Text, Group, Title, Paper, Badge, Notification, Flex, Center, Loader } from "@mantine/core";
 import { usePlayerStats } from "../../store/player-stats-context.js";
 import { formatTime } from "../../lib/helperFunctions.js";
 import { getLeaderboards } from "../../lib/APILeaderboards.js";
@@ -38,22 +38,16 @@ const Leaderboards = () => {
           </Text>
         </Table.Td>
         <Table.Td>
-          {/* <Group gap="sm"> */}
-          {/* <Avatar size={30} radius="xl" color="blue">
-              {user.user_email.charAt(0).toUpperCase()}
-            </Avatar> */}
           <Text size="sm" fw={500}>
             {user.user_email.split("@")[0]}
           </Text>
-          {/* </Group> */}
         </Table.Td>
+        <Table.Td>{user.correct}</Table.Td>
         <Table.Td>
+          {" "}
           <Badge variant="filled" color="blue">
-            {user.score.toLocaleString()} pts
+            {user.score} pts
           </Badge>
-        </Table.Td>
-        <Table.Td>
-          <Text size="sm">{formatTime(user.time_taken)}</Text>
         </Table.Td>
       </Table.Tr>
     );
@@ -119,28 +113,29 @@ const Leaderboards = () => {
       )}
 
       <Paper shadow="sm" radius="md" p="xl" withBorder>
-        {topPlayers.length > 0 ? (
-          <>
-            <Title c={"blue"} fw={900} ta={"center"} order={2} mb="lg">
-              Top Players
-            </Title>
-
-            <Table verticalSpacing="md" highlightOnHover>
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>Rank</Table.Th>
-                  <Table.Th>Player</Table.Th>
-                  <Table.Th>Score</Table.Th>
-                  <Table.Th>Accuracy</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>{rows}</Table.Tbody>
-            </Table>
-          </>
+        <Title c={"blue"} fw={900} ta={"center"} order={2} mb="lg">
+          Top Players
+        </Title>
+        {loading ? (
+          <Center py="xl">
+            <Loader size="xl" />
+          </Center>
+        ) : topPlayers.length > 0 ? (
+          <Table verticalSpacing="md" highlightOnHover>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>Rank</Table.Th>
+                <Table.Th>Player</Table.Th>
+                <Table.Th>Correct</Table.Th>
+                <Table.Th>Score</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{rows}</Table.Tbody>
+          </Table>
         ) : (
-          <Title c={"blue"} fw={900} ta={"center"}>
-            Nothing to display... yet!
-          </Title>
+          <Text ta="center" c="dimmed">
+            No high scores yet. Be the first!
+          </Text>
         )}
       </Paper>
     </Container>

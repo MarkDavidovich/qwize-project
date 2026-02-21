@@ -67,7 +67,7 @@ const Quiz = () => {
   };
 
   useEffect(() => {
-    if (loading || questions.length === 0 || isAnswering || showQuitModal) {
+    if (loading || questions.length === 0 || isAnswering || showQuitModal || showRegisterModal) {
       return;
     }
 
@@ -76,7 +76,7 @@ const Quiz = () => {
     }, ONE_SECOND);
 
     return () => clearInterval(intervalId);
-  }, [currentIndex, loading, isAnswering, showQuitModal]);
+  }, [currentIndex, loading, isAnswering, showQuitModal, showRegisterModal]);
 
   useEffect(() => {
     if (currTime <= 0) {
@@ -196,9 +196,11 @@ const Quiz = () => {
         centered
       >
         <Text mb="sm">To fully experience Qwize and have your scores saved, please register for an account.</Text>
-        <Button onClick={() => navigate("/register")} mr="sm">
-          Register Now
-        </Button>
+        <Flex justify="flex-end">
+          <Button onClick={() => navigate("/register")} mr="sm">
+            Register Now
+          </Button>
+        </Flex>
       </Modal>
     </Container>
   );

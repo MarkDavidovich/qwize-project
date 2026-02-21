@@ -87,7 +87,7 @@ const Leaderboards = () => {
       {completedQuiz && (
         <Paper p="1rem">
           <Title c={"blue"} fw={900} ta={"center"} mb={"1rem"}>
-            Last quiz results
+            Last Qwize results
           </Title>
           <Paper bg="blue" radius="lg" display="flex">
             <Flex className={style.results}>{quizResults}</Flex>
@@ -97,7 +97,7 @@ const Leaderboards = () => {
 
       <Paper shadow="sm" radius="md" p="xl" withBorder>
         <Title c={"blue"} fw={900} ta={"center"} order={2} mb="lg">
-          Top Players
+          Top Qwizers
         </Title>
         {loading ? (
           <Center py="xl">
@@ -108,7 +108,7 @@ const Leaderboards = () => {
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>Rank</Table.Th>
-                <Table.Th>Player</Table.Th>
+                <Table.Th>Qwizer</Table.Th>
                 <Table.Th>Correct</Table.Th>
                 <Table.Th>Score</Table.Th>
               </Table.Tr>

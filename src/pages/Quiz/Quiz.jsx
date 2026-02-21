@@ -7,6 +7,7 @@ import { TIME_PER_QUESTION, ONE_SECOND } from "../../lib/constants.js";
 import { calculatePercentage } from "../../lib/helperFunctions.js";
 import { usePlayerStats } from "../../store/player-stats-context.js";
 import { useAuth } from "../../auth/AuthProvider";
+import { updateLeaderboard } from "../../lib/APILeaderboards.js";
 
 const Quiz = () => {
   const [questions, setQuestions] = useState([]);
@@ -19,7 +20,8 @@ const Quiz = () => {
   const navigate = useNavigate();
 
   const { difficulty, amount } = useParams();
-  const { handleTimer, handleResetStats, handleTotalQuestions, handleChosenDifficulty, handleCompleteQuiz } = usePlayerStats();
+  const { timeElapsed, handleTimer, handleResetStats, handleTotalQuestions, handleChosenDifficulty, handleCompleteQuiz, handleCorrectAnswer } =
+    usePlayerStats();
   const { loggedOnUser } = useAuth();
 
   useEffect(() => {
@@ -40,14 +42,12 @@ const Quiz = () => {
     loadQuestions();
   }, [difficulty, amount]);
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = async () => {
     setAnswering(false);
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((next) => next + 1);
       setCurrTime(TIME_PER_QUESTION);
     } else {
-      handleCompleteQuiz(true);
-
       const isEasyFive = String(difficulty).toLowerCase() === "easy" && Number(amount) === 5;
       // debug info
       console.log("[Quiz] completion check:", { difficulty, amount, isEasyFive, loggedOnUser });
@@ -56,6 +56,9 @@ const Quiz = () => {
         console.log("[Quiz] showing register modal");
         setShowRegisterModal(true);
       } else {
+        const { newCorrectAnswers, newTotalScore } = handleCorrectAnswer();
+        handleCompleteQuiz(true);
+        await updateLeaderboard(loggedOnUser.email, newTotalScore, newCorrectAnswers, timeElapsed);
         navigate("/leaderboards");
       }
     }
@@ -131,8 +134,8 @@ const Quiz = () => {
         }}
       />
 
-      <Button 
-        variant="outline" 
+      <Button
+        variant="outline"
         color="red"
         size="md"
         mt="md"

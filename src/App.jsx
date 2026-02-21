@@ -29,22 +29,26 @@ function App() {
       >
         <PlayerStatsProvider>
           {!hideNavBar && <Navbar />}
+
           <div className="container">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/leaderboards"
-                element={
-                  <ProtectedRoute>
-                    <Leaderboards />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/quiz/:difficulty/:amount" element={<Quiz />} />
-            </Routes>
+            {authReady && (
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/leaderboards"
+                  element={
+                    <ProtectedRoute>
+                      <Leaderboards />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/quiz/:difficulty/:amount" element={<Quiz />} />
+              </Routes>
+            )}
           </div>
+
           <Footer />
         </PlayerStatsProvider>
       </AuthProvider>

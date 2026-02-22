@@ -35,3 +35,28 @@ export const createUserInfo = async (userId, username) => {
     console.error(`Error in createInitialUserInfo: ${err.message}`);
   }
 };
+
+export const updateUserInfo = async (userId, stats) => {
+  const { totalScore, totalTime, correctAnswers } = stats;
+
+  try {
+    const currentInfo = await getUserInfo(userId);
+
+    if (currentInfo) {
+      const { error } = await supabase
+        .from("user-info")
+        .update({
+          total_score: (currentInfo.total_score || 0) + totalScore,
+          total_time: (currentInfo.total_time || 0) + totalTime,
+          correct_answers: (currentInfo.correct_answers || 0) + correctAnswers,
+        })
+        .eq("user_id", userId);
+
+      if (error) {
+        console.error(`Error updating user info: ${error.message}`);
+      }
+    }
+  } catch (err) {
+    console.error(`Error updating cumulative stats: ${err.message}`);
+  }
+};

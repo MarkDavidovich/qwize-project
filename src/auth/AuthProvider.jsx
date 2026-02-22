@@ -38,7 +38,6 @@ export function AuthProvider({ onAuthReady, children }) {
 
       setLoggedOnUser(data.user);
       console.log(`Logged in: ${data.user.email}`);
-      await createUserInfo(data.user.id, data.user.email.split("@")[0]);
       navigate("/");
       return { success: true };
     } catch (err) {

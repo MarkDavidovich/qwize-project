@@ -1,10 +1,10 @@
-import { Button, Container, Group, Text, Burger, Drawer, Stack, Divider } from "@mantine/core";
+import { Button, Container, Group, Burger, Drawer, Stack, Divider } from "@mantine/core";
 import style from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
 import { useDisclosure } from "@mantine/hooks";
-import { Footer } from "../Footer/Footer";
 import ContactInfo from "../ContactInfo/ContactInfo";
+import logo from "../../assets/logo.png";
 
 export function Navbar() {
   const { loggedOnUser, handleLogout } = useAuth();
@@ -26,9 +26,9 @@ export function Navbar() {
         </>
       )}
       {loggedOnUser && (
-          <NavLink to="/leaderboards" onClick={close} className={({ isActive }) => `${isActive ? style.link + " " + style.active : style.link}`}>
-            Leaderboards
-          </NavLink>
+        <NavLink to="/leaderboards" onClick={close} className={({ isActive }) => `${isActive ? style.link + " " + style.active : style.link}`}>
+          Leaderboards
+        </NavLink>
       )}
     </>
   );
@@ -39,11 +39,13 @@ export function Navbar() {
         <Group gap={5} visibleFrom="xs">
           {navLinks}
         </Group>
-
+        <div className={style.logo}>
+          <img src={logo} alt="qwize logo" />
+        </div>
         {loggedOnUser && (
           <Group gap={5} visibleFrom="xs">
-            <NavLink to="/profile" className={style.link}>
-              <Button variant="transparent">{loggedOnUser.email.split("@")[0]}</Button>
+            <NavLink to="/profile" className={({ isActive }) => `${isActive ? style.link + " " + style.active : style.link}`}>
+              Profile
             </NavLink>
             <Button variant="subtle" color="red" onClick={handleLogout}>
               Log out
@@ -55,7 +57,7 @@ export function Navbar() {
         <Drawer
           opened={opened}
           onClose={close}
-          title="Qwize"
+          title="Navigation"
           padding="md"
           size="80%"
           h="100%"
@@ -77,9 +79,16 @@ export function Navbar() {
             <Stack pb="sm">
               {loggedOnUser && (
                 <>
-                  <NavLink to="/profile" onClick={close} className={style.link}>
-                    <Button variant="transparent">{loggedOnUser.email.split("@")[0]}</Button>
-                  </NavLink>
+                  <Button
+                    color="blue"
+                    variant="light"
+                    component={NavLink}
+                    to="/profile"
+                    onClick={close}
+                    className={({ isActive }) => `${isActive ? style.link + " " + style.active : style.link}`}
+                  >
+                    Profile
+                  </Button>
                   <Button color="red" variant="light" onClick={handleLogout}>
                     Log out
                   </Button>

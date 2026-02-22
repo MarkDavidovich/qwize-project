@@ -11,6 +11,7 @@
   height: 56px;
   display: flex;
   justify-content: space-between;
+  flex-direction: row-reverse;
   align-items: center;
 }
 
@@ -37,4 +38,14 @@
 .active {
   background-color: var(--mantine-color-blue-filled);
   color: var(--mantine-color-white);
+}
+
+.logo {
+  display: flex;
+  width: 100px;
+}
+
+.logo > img {
+  object-fit: contain;
+  width: 100%;
 }

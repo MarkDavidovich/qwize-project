@@ -6,7 +6,7 @@ const PlayerStatsProvider = ({ children }) => {
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
-  const [chosenDifficulty, setChosenDifficulty] = useState("");
+  const [questionDifficulty, setQuestionDifficulty] = useState("");
   const [totalScore, setTotalScore] = useState(0);
   const [completedQuiz, setCompletedQuiz] = useState(false);
 
@@ -27,7 +27,7 @@ const PlayerStatsProvider = ({ children }) => {
 
   const handleCorrectAnswer = () => {
     const pointsMap = { easy: 1, medium: 2, hard: 3 };
-    const points = pointsMap[chosenDifficulty.toLowerCase()] || 0;
+    const points = pointsMap[questionDifficulty.toLowerCase()] || 0;
 
     const newCorrectAnswers = correctAnswers + 1;
     const newTotalScore = totalScore + points;
@@ -45,8 +45,8 @@ const PlayerStatsProvider = ({ children }) => {
     setTotalQuestions(questionsAmount);
   };
 
-  const handleChosenDifficulty = (difficulty) => {
-    setChosenDifficulty(difficulty);
+  const handleQuestionDifficulty = (difficulty) => {
+    setQuestionDifficulty(difficulty);
   };
 
   const handleCompleteQuiz = (isCompleted) => {
@@ -59,7 +59,7 @@ const PlayerStatsProvider = ({ children }) => {
     setTimeElapsed(0);
     setCorrectAnswers(0);
     setTotalQuestions(0);
-    setChosenDifficulty("");
+    setQuestionDifficulty("");
     setTotalScore(0);
   };
 
@@ -67,13 +67,13 @@ const PlayerStatsProvider = ({ children }) => {
     timeElapsed,
     correctAnswers,
     totalQuestions,
-    chosenDifficulty,
+    questionDifficulty,
     totalScore,
     completedQuiz,
     handleTimer,
     handleCorrectAnswer,
     handleTotalQuestions,
-    handleChosenDifficulty,
+    handleQuestionDifficulty,
     handleCompleteQuiz,
     handleResetStats,
   };

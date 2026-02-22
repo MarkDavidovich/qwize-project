@@ -23,7 +23,7 @@ const Quiz = () => {
   const navigate = useNavigate();
 
   const { difficulty, amount } = useParams();
-  const { timeElapsed, handleTimer, handleResetStats, handleTotalQuestions, handleChosenDifficulty, handleCompleteQuiz, handleCorrectAnswer } =
+  const { timeElapsed, handleTimer, handleResetStats, handleTotalQuestions, handleQuestionDifficulty, handleCompleteQuiz, handleCorrectAnswer } =
     usePlayerStats();
   const { loggedOnUser } = useAuth();
 
@@ -35,7 +35,7 @@ const Quiz = () => {
         setQuestions(data);
         handleTimer(true);
         handleTotalQuestions(amount);
-        handleChosenDifficulty(difficulty);
+        handleQuestionDifficulty(data[0].difficulty);
       } catch (error) {
         console.error("Failed to load questions:", error);
       } finally {
@@ -48,8 +48,10 @@ const Quiz = () => {
   const handleNextQuestion = async () => {
     setAnswering(false);
     if (currentIndex < questions.length - 1) {
-      setCurrentIndex((next) => next + 1);
+      const nextIdx = currentIndex + 1;
+      setCurrentIndex(nextIdx);
       setCurrTime(TIME_PER_QUESTION);
+      handleQuestionDifficulty(questions[nextIdx].difficulty);
     } else {
       const isEasyFive = String(difficulty).toLowerCase() === "easy" && Number(amount) === 5;
       // debug info

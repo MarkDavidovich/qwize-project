@@ -1,5 +1,6 @@
 import { PlayerStatsContext } from "./player-stats-context";
 import { useState, useRef } from "react";
+import { ONE_SECOND } from "../lib/constants";
 
 const PlayerStatsProvider = ({ children }) => {
   const [timeElapsed, setTimeElapsed] = useState(0);
@@ -17,7 +18,7 @@ const PlayerStatsProvider = ({ children }) => {
 
       timerRef.current = setInterval(() => {
         setTimeElapsed((prev) => prev + 1);
-      }, 1000);
+      }, ONE_SECOND);
     } else {
       clearInterval(timerRef.current);
       timerRef.current = null;

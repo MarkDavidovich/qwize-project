@@ -1,7 +1,7 @@
 import style from "./Leaderboards.module.css";
 import { Container, Table, Avatar, Text, Group, Title, Paper, Badge, Notification, Flex, Center, Loader, Box } from "@mantine/core";
 import { usePlayerStats } from "../../store/player-stats-context.js";
-import { formatTime } from "../../lib/helperFunctions.js";
+import { formatTimeMinutes } from "../../lib/helperFunctions.js";
 import { getLeaderboards } from "../../lib/APILeaderboards.js";
 import { useEffect, useState } from "react";
 
@@ -10,7 +10,7 @@ const Leaderboards = () => {
   const [topPlayers, setTopPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const formattedTime = formatTime(timeElapsed);
+  const formattedTime = formatTimeMinutes(timeElapsed);
 
   useEffect(() => {
     const fetchLeaderboard = async () => {

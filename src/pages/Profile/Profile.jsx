@@ -4,6 +4,7 @@ import { useAuth } from '../../auth/AuthProvider';
 import { getUserInfo } from '../../lib/APIUserInfo';
 import classes from './Profile.module.css';
 import { IconBrandWhatsapp } from '@tabler/icons-react';
+import { formatTime } from '../../lib/helperFunctions';
 
 export function Profile() {
   const { loggedOnUser } = useAuth();
@@ -34,7 +35,7 @@ export function Profile() {
   const stats = [
     { label: 'Total Score', value: userInfo?.total_score || 0 },
     { label: 'Correct Answers', value: userInfo?.correct_answers || 0 },
-    { label: 'Total Time', value: userInfo?.total_time || 0 },
+    { label: 'Total Time', value: formatTime(userInfo?.total_time) || 0 },
   ];
 
   const items = stats.map((stat) => (

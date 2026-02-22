@@ -52,10 +52,8 @@ const Quiz = () => {
     } else {
       const isEasyFive = String(difficulty).toLowerCase() === "easy" && Number(amount) === 5;
       // debug info
-      console.log("[Quiz] completion check:", { difficulty, amount, isEasyFive, loggedOnUser });
 
       if (!loggedOnUser && isEasyFive) {
-        console.log("[Quiz] showing register modal");
         setShowRegisterModal(true);
       } else {
         const { newCorrectAnswers, newTotalScore } = handleCorrectAnswer();

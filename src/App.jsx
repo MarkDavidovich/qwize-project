@@ -11,6 +11,7 @@ import Leaderboards from "./pages/Leaderboards/Leaderboards";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import PlayerStatsProvider from "./store/PlayerStatsProvider";
 import Quiz from "./pages/Quiz/Quiz";
+import Profile from "./pages/Profile/Profile";
 
 import { useLocation } from "react-router-dom";
 
@@ -45,6 +46,14 @@ function App() {
                   }
                 />
                 <Route path="/quiz/:difficulty/:amount" element={<Quiz />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             )}
           </div>

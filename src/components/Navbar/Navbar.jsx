@@ -26,9 +26,9 @@ export function Navbar() {
         </>
       )}
       {loggedOnUser && (
-        <NavLink to="/leaderboards" onClick={close} className={({ isActive }) => `${isActive ? style.link + " " + style.active : style.link}`}>
-          Leaderboards
-        </NavLink>
+          <NavLink to="/leaderboards" onClick={close} className={({ isActive }) => `${isActive ? style.link + " " + style.active : style.link}`}>
+            Leaderboards
+          </NavLink>
       )}
     </>
   );
@@ -42,7 +42,9 @@ export function Navbar() {
 
         {loggedOnUser && (
           <Group gap={5} visibleFrom="xs">
-            <Button variant="transparent">{loggedOnUser.email.split("@")[0]}</Button>
+            <NavLink to="/profile" className={style.link}>
+              <Button variant="transparent">{loggedOnUser.email.split("@")[0]}</Button>
+            </NavLink>
             <Button variant="subtle" color="red" onClick={handleLogout}>
               Log out
             </Button>
@@ -75,7 +77,9 @@ export function Navbar() {
             <Stack pb="sm">
               {loggedOnUser && (
                 <>
-                  <Button variant="transparent">{loggedOnUser.email.split("@")[0]}</Button>
+                  <NavLink to="/profile" onClick={close} className={style.link}>
+                    <Button variant="transparent">{loggedOnUser.email.split("@")[0]}</Button>
+                  </NavLink>
                   <Button color="red" variant="light" onClick={handleLogout}>
                     Log out
                   </Button>

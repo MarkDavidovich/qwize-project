@@ -67,7 +67,7 @@ export function Profile() {
           color="#25D366"
           leftSection={<IconBrandWhatsapp size={20} />}
           component="a"
-          href={`https://wa.me/?text=${encodeURIComponent(`My Qwize score: ${userInfo?.total_score} Can you top that? Play now: ${window.location.origin}`)}`}
+          href={`https://wa.me/?text=${encodeURIComponent(`My Qwize score: ${userInfo?.total_score} Can you top that? Play now: https://markdavidovich.github.io/qwize-project/`)}`}
           //TODO add a normal message
           target="_blank"
         >

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { useState, useEffect, createContext, useContext } from "react";
 import { supabase } from "../lib/supabase.js";
+import { createUserInfo } from "../lib/APIUserInfo.js";
 
 const AuthContext = createContext(null);
 
@@ -37,6 +38,7 @@ export function AuthProvider({ onAuthReady, children }) {
 
       setLoggedOnUser(data.user);
       console.log(`Logged in: ${data.user.email}`);
+      await createUserInfo(data.user.id, data.user.email.split("@")[0]);
       navigate("/");
       return { success: true };
     } catch (err) {
@@ -59,6 +61,7 @@ export function AuthProvider({ onAuthReady, children }) {
       }
 
       console.log(`Registration successful!`);
+      await createUserInfo(data.user.id, cleanEmail.split("@")[0]);
       setLoggedOnUser(data.user);
       navigate("/");
       return { success: true };

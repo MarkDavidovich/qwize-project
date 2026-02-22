@@ -1,19 +1,47 @@
-import { Card, Avatar, Text, Group, Button, Box } from '@mantine/core';
+import { Card, Avatar, Text, Group, Button, Box, Loader, Center } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../../auth/AuthProvider';
+import { getUserInfo } from '../../lib/APIUserInfo';
 import classes from './Profile.module.css';
 
-const stats = [
-  { label: 'Followers', value: '34K' },
-  { label: 'Follows', value: '187' },
-  { label: 'Posts', value: '1.6K' },
-];
-
 export function Profile() {
+  const { loggedOnUser } = useAuth();
+  const [userInfo, setUserInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      if (loggedOnUser) {
+        const data = await getUserInfo(loggedOnUser.id);
+        console.log(data);
+        setUserInfo(data);
+      }
+      setLoading(false);
+    };
+
+    fetchUserInfo();
+  }, [loggedOnUser]);
+
+  if (loading) {
+    return (
+      <Center h="50vh">
+        <Loader size="xl" />
+      </Center>
+    );
+  }
+
+  const stats = [
+    { label: 'Total Score', value: userInfo?.total_score || 0 },
+    { label: 'Correct Answers', value: userInfo?.correct_answers || 0 },
+    { label: 'Total Time', value: userInfo?.total_time || 0 },
+  ];
+
   const items = stats.map((stat) => (
-    <div key={stat.label}>
-      <Text textAlign="center" fz="lg" fw={500}>
+    <div key={stat.label} style={{ textAlign: 'center' }}>
+      <Text fz="lg" fw={500}>
         {stat.value}
       </Text>
-      <Text textAlign="center" fz="sm" c="dimmed" lh={1}>
+      <Text fz="sm" c="dimmed" lh={1}>
         {stat.label}
       </Text>
     </div>
@@ -22,26 +50,8 @@ export function Profile() {
   return (
     <Box className={classes.wrapper}>
       <Card withBorder padding="xl" radius="md" className={classes.card}>
-        <Card.Section
-          h={140}
-          style={{
-            backgroundImage:
-              'url(https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80)',
-          }}
-        />
-        <Avatar
-          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png"
-          size={80}
-          radius={80}
-          mx="auto"
-          mt={-30}
-          className={classes.avatar}
-        />
-        <Text textAlign="center" fz="lg" fw={500} mt="sm">
-          Bill Headbanger
-        </Text>
-        <Text textAlign="center" fz="sm" c="dimmed">
-          Fullstack engineer
+        <Text c="blue" fw={700} align="center" fz="lg" mt="sm">
+          {userInfo?.username || loggedOnUser?.email.split('@')[0]}
         </Text>
         <Group mt="md" justify="center" gap={30}>
           {items}

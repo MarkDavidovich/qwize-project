@@ -1,10 +1,10 @@
-import { Card, Avatar, Text, Group, Button, Box, Loader, Center } from '@mantine/core';
-import { useEffect, useState } from 'react';
-import { useAuth } from '../../auth/AuthProvider';
-import { getUserInfo } from '../../lib/APIUserInfo';
-import classes from './Profile.module.css';
-import { IconBrandWhatsapp } from '@tabler/icons-react';
-import { formatTimeHours } from '../../lib/helperFunctions';
+import { Card, Avatar, Text, Group, Button, Box, Loader, Center, Title } from "@mantine/core";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../auth/AuthProvider";
+import { getUserInfo } from "../../lib/APIUserInfo";
+import style from "./Profile.module.css";
+import { IconBrandWhatsapp } from "@tabler/icons-react";
+import { formatTimeHours } from "../../lib/helperFunctions";
 
 export function Profile() {
   const { loggedOnUser } = useAuth();
@@ -33,46 +33,48 @@ export function Profile() {
   }
 
   const stats = [
-    { label: 'Total Score', value: userInfo?.total_score || 0 },
-    { label: 'Correct Answers', value: userInfo?.correct_answers || 0 },
-    { label: 'Total Time', value: formatTimeHours(userInfo?.total_time) || 0 },
+    { label: "Total Score", value: userInfo?.total_score || 0 },
+    { label: "Correct Answers", value: userInfo?.correct_answers || 0 },
+    { label: "Time Played", value: formatTimeHours(userInfo?.total_time) || 0 },
   ];
 
   const items = stats.map((stat) => (
-    <div key={stat.label} style={{ textAlign: 'center' }}>
-      <Text fz="lg" fw={500}>
+    <div key={stat.label} style={{ textAlign: "center" }}>
+      <Text size="40px" fw={700} c={"white"}>
         {stat.value}
       </Text>
-      <Text fz="sm" c="dimmed" lh={1}>
+      <Text fz="xl" fw={600} c="" lh={1} pt={"sm"}>
         {stat.label}
       </Text>
     </div>
   ));
 
   return (
-    <Box className={classes.wrapper}>
-      <Card withBorder padding="xl" radius="md" className={classes.card}>
-        <Text c="blue" fw={700} align="center" fz="lg" mt="sm">
-          {userInfo?.username || loggedOnUser?.email.split('@')[0]}
-        </Text>
-        <Group mt="md" justify="center" gap={30}>
-          {items}
-        </Group>
+    <>
+      <Box className={style.wrapper}>
+        <Card withBorder padding="xl" radius="md" className={style.card} bg={"blue"}>
+          <Text size="40px" fw={900} c={"white"} align="center" pb={"md"}>
+            {userInfo?.username || loggedOnUser?.email.split("@")[0]}
+          </Text>
+          <Group mt="md" justify="center" gap={30}>
+            {items}
+          </Group>
+        </Card>
         <Button
-          fullWidth
           radius="md"
           mt="xl"
           size="md"
           color="#25D366"
           leftSection={<IconBrandWhatsapp size={20} />}
           component="a"
-          href={`https://wa.me/?text=${encodeURIComponent(`Check out this awesome quiz app! my score is ${userInfo?.total_score} `+ window.location.origin)}`}
+          href={`https://wa.me/?text=${encodeURIComponent(`My Qwize score: ${userInfo?.total_score} 🎯 Can you top that? Play now: ${window.location.origin}` + window.location.origin)}`}
+          //TODO add a normal message
           target="_blank"
         >
           Share on WhatsApp
         </Button>
-      </Card>
-    </Box>
+      </Box>
+    </>
   );
 }
 

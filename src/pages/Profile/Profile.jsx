@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../../auth/AuthProvider';
 import { getUserInfo } from '../../lib/APIUserInfo';
 import classes from './Profile.module.css';
+import { IconBrandWhatsapp } from '@tabler/icons-react';
 
 export function Profile() {
   const { loggedOnUser } = useAuth();
@@ -56,8 +57,18 @@ export function Profile() {
         <Group mt="md" justify="center" gap={30}>
           {items}
         </Group>
-        <Button fullWidth radius="md" mt="xl" size="md" variant="default" color="gray">
-          Follow
+        <Button
+          fullWidth
+          radius="md"
+          mt="xl"
+          size="md"
+          color="#25D366"
+          leftSection={<IconBrandWhatsapp size={20} />}
+          component="a"
+          href={`https://wa.me/?text=${encodeURIComponent("Check out this awesome quiz app! " + window.location.origin)}`}
+          target="_blank"
+        >
+          Share on WhatsApp
         </Button>
       </Card>
     </Box>

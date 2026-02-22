@@ -7,13 +7,14 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthProvider.jsx";
 
 const Leaderboards = () => {
-  const { completedQuiz, correctAnswers, totalQuestions, totalScore, timeElapsed } = usePlayerStats();
+  const { completedQuiz, totalQuestions, timeElapsed, handleCorrectAnswer } = usePlayerStats();
   const [topPlayers, setTopPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const { loggedOnUser } = useAuth();
 
   const formattedTime = formatTimeMinutes(timeElapsed);
+  const { newCorrectAnswers, newTotalScore } = handleCorrectAnswer();
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
@@ -68,7 +69,7 @@ const Leaderboards = () => {
     <>
       <Flex className={style.statBox} direction={"column"} justify={"center"} align={"center"} p={"10px"} flex={"1"}>
         <Text size="30px" fw={900} c={"white"}>
-          {totalScore}
+          {newTotalScore}
         </Text>
         <Text size="17px" fw={500}>
           score
@@ -76,7 +77,7 @@ const Leaderboards = () => {
       </Flex>
       <Flex className={style.statBox} direction={"column"} justify={"center"} align={"center"} p={"10px"} flex={"2"}>
         <Text size="30px" fw={900} c={"white"}>
-          {correctAnswers} correct
+          {newCorrectAnswers} correct
         </Text>
         <Text size="17px" fw={500}>
           out of {totalQuestions}

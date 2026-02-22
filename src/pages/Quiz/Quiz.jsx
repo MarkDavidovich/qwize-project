@@ -2,18 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getQuestions } from "../../lib/APIQuestions.js";
 import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx";
-import {
-  Container,
-  Title,
-  Text,
-  Progress,
-  Flex,
-  Loader,
-  Center,
-  Modal,
-  Button,
-  Group,
-} from "@mantine/core";
+import { Container, Text, Progress, Flex, Loader, Center, Modal, Button, Group } from "@mantine/core";
 import { TIME_PER_QUESTION, ONE_SECOND } from "../../lib/constants.js";
 import { calculatePercentage } from "../../lib/helperFunctions.js";
 import { usePlayerStats } from "../../store/player-stats-context.js";
@@ -34,15 +23,8 @@ const Quiz = () => {
   const navigate = useNavigate();
 
   const { difficulty, amount } = useParams();
-  const {
-    timeElapsed,
-    handleTimer,
-    handleResetStats,
-    handleTotalQuestions,
-    handleChosenDifficulty,
-    handleCompleteQuiz,
-    handleCorrectAnswer,
-  } = usePlayerStats();
+  const { timeElapsed, handleTimer, handleResetStats, handleTotalQuestions, handleChosenDifficulty, handleCompleteQuiz, handleCorrectAnswer } =
+    usePlayerStats();
   const { loggedOnUser } = useAuth();
 
   useEffect(() => {
@@ -69,8 +51,7 @@ const Quiz = () => {
       setCurrentIndex((next) => next + 1);
       setCurrTime(TIME_PER_QUESTION);
     } else {
-      const isEasyFive =
-        String(difficulty).toLowerCase() === "easy" && Number(amount) === 5;
+      const isEasyFive = String(difficulty).toLowerCase() === "easy" && Number(amount) === 5;
       // debug info
 
       if (!loggedOnUser && isEasyFive) {
@@ -78,12 +59,7 @@ const Quiz = () => {
       } else {
         const { newCorrectAnswers, newTotalScore } = handleCorrectAnswer();
         handleCompleteQuiz(true);
-        await updateLeaderboard(
-          loggedOnUser.email,
-          newTotalScore,
-          newCorrectAnswers,
-          timeElapsed,
-        );
+        await updateLeaderboard(loggedOnUser.email, newTotalScore, newCorrectAnswers, timeElapsed);
         await updateUserInfo(loggedOnUser.id, {
           totalScore: newTotalScore,
           totalTime: timeElapsed,
@@ -95,13 +71,7 @@ const Quiz = () => {
   };
 
   useEffect(() => {
-    if (
-      loading ||
-      questions.length === 0 ||
-      isAnswering ||
-      showQuitModal ||
-      showRegisterModal
-    ) {
+    if (loading || questions.length === 0 || isAnswering || showQuitModal || showRegisterModal) {
       return;
     }
 
@@ -136,16 +106,11 @@ const Quiz = () => {
 
   const currentQuestion = questions[currentIndex];
   const currTimePercentage = calculatePercentage(currTime, TIME_PER_QUESTION);
-  const currQuestionPercentage = calculatePercentage(
-    currentIndex,
-    questions.length - 1,
-  );
+  const currQuestionPercentage = calculatePercentage(currentIndex, questions.length - 1);
 
   return (
     <Container size="sm" py="xl">
-      <div
-        className={`${style.container}${showQuitModal ? style.blurred : ""}`}
-      >
+      <div className={`${style.container}${showQuitModal ? style.blurred : ""}`}>
         <Flex justify="center" align="center" gap="xs" mb="sm">
           <Text
             size="xs"
@@ -154,13 +119,7 @@ const Quiz = () => {
             px="xs"
             py={2}
             c="white"
-            bg={
-              currentQuestion.difficulty === "easy"
-                ? "green"
-                : currentQuestion.difficulty === "medium"
-                  ? "orange"
-                  : "red"
-            }
+            bg={currentQuestion.difficulty === "easy" ? "green" : currentQuestion.difficulty === "medium" ? "orange" : "red"}
             style={{ borderRadius: "100px" }}
           >
             {currentQuestion.difficulty}
@@ -170,14 +129,8 @@ const Quiz = () => {
           </Text>
         </Flex>
 
-        <Progress
-          mb={"lg"}
-          value={currQuestionPercentage}
-          transitionDuration={500}
-        ></Progress>
-        <div
-          className={`${style.container}${showQuitModal ? style.blurred : ""}`}
-        ></div>
+        <Progress mb={"lg"} value={currQuestionPercentage} transitionDuration={500}></Progress>
+        <div className={`${style.container}${showQuitModal ? style.blurred : ""}`}></div>
         <QuestionCard
           key={currentQuestion.id}
           currentQuestion={currentQuestion}
@@ -218,8 +171,7 @@ const Quiz = () => {
         }}
       >
         <Text size="sm" mb="lg">
-          Are you sure you want to finish the quiz now? Your current progress
-          will not be saved to the leaderboards.
+          Are you sure you want to finish the quiz now? Your current progress will not be saved to the leaderboards.
         </Text>
 
         <Group justify="flex-end">
@@ -247,10 +199,7 @@ const Quiz = () => {
         title="Great job!"
         centered
       >
-        <Text mb="sm">
-          To fully experience Qwize and have your scores saved, please register
-          for an account.
-        </Text>
+        <Text mb="sm">To fully experience Qwize and have your scores saved, please register for an account.</Text>
         <Flex justify="flex-end">
           <Button onClick={() => navigate("/register")} mr="sm">
             Register Now

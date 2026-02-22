@@ -32,6 +32,20 @@
   border-left: 2px solid white;
 }
 
+.roundedLeft {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.roundedRight {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.blueText {
+  color: #228be6;
+}
+
 @media (max-width: 30em) {
   .results {
     flex-direction: column;

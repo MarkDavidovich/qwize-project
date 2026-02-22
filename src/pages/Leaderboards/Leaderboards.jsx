@@ -4,11 +4,14 @@ import { usePlayerStats } from "../../store/player-stats-context.js";
 import { formatTimeMinutes } from "../../lib/helperFunctions.js";
 import { getLeaderboards } from "../../lib/APILeaderboards.js";
 import { useEffect, useState } from "react";
+import { useAuth } from "../../auth/AuthProvider.jsx";
 
 const Leaderboards = () => {
   const { completedQuiz, correctAnswers, totalQuestions, totalScore, timeElapsed } = usePlayerStats();
   const [topPlayers, setTopPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { loggedOnUser } = useAuth();
 
   const formattedTime = formatTimeMinutes(timeElapsed);
 
@@ -31,21 +34,29 @@ const Leaderboards = () => {
     const rank = idx + 1;
 
     return (
-      <Table.Tr key={user.id || user.user_email}>
-        <Table.Td>
-          <Text fw={700} c={rank <= 3 ? "blue" : "gray"}>
+      <Table.Tr key={user.id || user.user_email} bg={loggedOnUser.email === user.user_email ? "blue" : ""}>
+        <Table.Td className={style.roundedLeft}>
+          <Text fw={700} c={loggedOnUser.email === user.user_email ? "white" : rank <= 3 ? "blue" : "gray"}>
             #{rank}
           </Text>
         </Table.Td>
         <Table.Td>
-          <Text size="sm" fw={500}>
+          <Text size="sm" fw={500} c={loggedOnUser.email === user.user_email ? "white" : ""}>
             {user.user_email.split("@")[0]}
           </Text>
         </Table.Td>
-        <Table.Td>{user.correct}</Table.Td>
         <Table.Td>
+          <Text size="sm" fw={500} c={loggedOnUser.email === user.user_email ? "white" : ""}>
+            {user.correct}
+          </Text>
+        </Table.Td>
+        <Table.Td className={style.roundedRight}>
           {" "}
-          <Badge variant="filled" color="blue">
+          <Badge
+            className={loggedOnUser.email === user.user_email ? `${style.blueText}` : ""}
+            variant="filled"
+            color={loggedOnUser.email === user.user_email ? "white" : "blue"}
+          >
             {user.score} pts
           </Badge>
         </Table.Td>

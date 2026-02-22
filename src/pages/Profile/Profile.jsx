@@ -65,7 +65,7 @@ export function Profile() {
           color="#25D366"
           leftSection={<IconBrandWhatsapp size={20} />}
           component="a"
-          href={`https://wa.me/?text=${encodeURIComponent("Check out this awesome quiz app! " + window.location.origin)}`}
+          href={`https://wa.me/?text=${encodeURIComponent(`Check out this awesome quiz app! my score is ${userInfo?.total_score} `+ window.location.origin)}`}
           target="_blank"
         >
           Share on WhatsApp

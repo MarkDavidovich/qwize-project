@@ -1,7 +1,3 @@
-You got it. Let's make it punchy and actually sound like it was written by the people who built it.
-
----
-
 # Qwize
 
 A fast-paced, high-stakes trivia app designed to test your brain under pressure. Built with a modern stack for a smooth, "app-like" feel on any device.
